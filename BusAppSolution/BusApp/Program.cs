@@ -77,18 +77,19 @@ namespace BusApp
                 options.UseSqlServer(connectionString));
             #endregion
 
-            // Repository Layer Dependency Injection
-            #region           
-           builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+            // Register HttpContextAccessor
+            builder.Services.AddHttpContextAccessor();
 
+            // Repository Layer Dependency Injection
+            #region Repositories         
+            builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+            builder.Services.AddScoped<IClientRepo, ClientRepo>();
             #endregion
 
             // Service Layer Dependency Injection
             #region Services
             builder.Services.AddScoped<IAuthService, AuthService>();
-
-
-
+            builder.Services.AddScoped<IClientService, ClientService>();
             #endregion
 
             // JWT Authentication & Authorization

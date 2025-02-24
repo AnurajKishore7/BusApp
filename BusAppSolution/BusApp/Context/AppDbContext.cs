@@ -183,7 +183,7 @@ namespace BusReservationApp.Context
                     DOB = new DateOnly(2002, 07, 11),
                     Gender = "Male",
                     Contact = "+911234567890",
-                    IsDisabled = false
+                    IsHandicapped = false
                 }
             );
 

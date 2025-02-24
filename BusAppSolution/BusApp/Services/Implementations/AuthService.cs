@@ -49,7 +49,7 @@ namespace BusApp.Services.Implementations
                 DOB = request.DOB,
                 Gender = request.Gender,
                 Contact = request.Contact,
-                IsDisabled = request.IsDisabled,
+                IsHandicapped = request.IsHandicapped,
                 IsDeleted = false // Default value
             };
 

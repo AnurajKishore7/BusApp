@@ -25,3 +25,12 @@ Note: "Install required packages"
 
 
  
+3. Clients
+Id [PK]
+Name
+Email [FK] (optional, references Users)
+DOB
+Gender
+Contact
+IsDisabled (handicapped?)
+IsDeleted

@@ -27,7 +27,7 @@ namespace BusApp.DTOs
         [RegularExpression(@"^\+?[1-9][0-9]{9,14}$", ErrorMessage = "Invalid contact number format.")]
         public string Contact { get; set; }
 
-        public bool IsDisabled { get; set; } = false; // Default: Not disabled
+        public bool IsHandicapped { get; set; } = false; // Default: Not disabled
 
         public bool IsDeleted { get; set; } = false; // Default: Not deleted
     }
