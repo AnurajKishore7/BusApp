@@ -84,12 +84,14 @@ namespace BusApp
             #region Repositories         
             builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
+            builder.Services.AddScoped<IOperatorRepo, OperatorRepo>();
             #endregion
 
             // Service Layer Dependency Injection
             #region Services
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IClientService, ClientService>();
+            builder.Services.AddScoped<IOperatorService, OperatorService>();
             #endregion
 
             // JWT Authentication & Authorization

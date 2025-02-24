@@ -35,6 +35,7 @@ namespace BusApp.Services.Implementations
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in GetAllClients (Service): {ex.Message}");
                 return Enumerable.Empty<ClientDto>();
             }
         }
@@ -60,6 +61,7 @@ namespace BusApp.Services.Implementations
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in GetClientById (Service): {ex.Message}");
                 return null;
             }
         }
@@ -85,6 +87,7 @@ namespace BusApp.Services.Implementations
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in GetClientByEmail (Service): {ex.Message}");
                 return null;
             }
         }
@@ -112,6 +115,7 @@ namespace BusApp.Services.Implementations
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in GetClient (Service): {ex.Message}");
                 return null;
             }
         }
@@ -134,7 +138,7 @@ namespace BusApp.Services.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in UpdateClientAsync (Service): {ex.Message}");
+                Console.WriteLine($"Error in UpdateClient (Service): {ex.Message}");
                 return false;
             }
         }
@@ -153,7 +157,7 @@ namespace BusApp.Services.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in DeleteClientAsync (Service): {ex.Message}");
+                Console.WriteLine($"Error in DeleteClientByEmail (Service): {ex.Message}");
                 return false;
             }
         }
@@ -175,7 +179,7 @@ namespace BusApp.Services.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in DeleteClientAsync (Service): {ex.Message}");
+                Console.WriteLine($"Error in DeleteClient (Service): {ex.Message}");
                 return false;
             }
         }

@@ -1,0 +1,11 @@
+﻿namespace BusApp.DTOs
+{
+    public class OperatorDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string? Contact { get; set; }
+        public bool IsDeleted { get; set; } = false;
+    }
+}

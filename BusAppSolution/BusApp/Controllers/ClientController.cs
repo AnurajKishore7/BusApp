@@ -40,7 +40,7 @@ namespace BusApp.Controllers
             try
             {
                 var client = await _clientService.GetClientByIdAsync(id);
-                if (client == null) return NotFound("Client not found.");
+                if (client == null) return NotFound($"Client with {id} not found.");
                 return Ok(client);
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace BusApp.Controllers
             try
             {
                 var client = await _clientService.GetClientByEmailAsync(email);
-                if (client == null) return NotFound("Client not found.");
+                if (client == null) return NotFound($"Client with {email} not found.");
                 return Ok(client);
             }
             catch (Exception ex)
