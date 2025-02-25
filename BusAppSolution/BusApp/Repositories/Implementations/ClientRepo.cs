@@ -23,7 +23,7 @@ namespace BusApp.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetAllClientsAsync: {ex.Message}");
+                Console.WriteLine($"Error in GetAllClientsAsync (Repo): {ex.Message}");
                 return new List<Client>();
             }
         }
@@ -36,7 +36,7 @@ namespace BusApp.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetClientByIdAsync: {ex.Message}");
+                Console.WriteLine($"Error in GetClientByIdAsync (Repo): {ex.Message}");
                 return null;
             }
         }
@@ -49,7 +49,7 @@ namespace BusApp.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetClientByEmailAsync: {ex.Message}");
+                Console.WriteLine($"Error in GetClientByEmailAsync (Repo): {ex.Message}");
                 return null;
             }
         }

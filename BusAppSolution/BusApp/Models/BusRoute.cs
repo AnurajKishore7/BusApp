@@ -23,6 +23,8 @@ namespace BusApp.Models
         [Range(1, int.MaxValue, ErrorMessage = "Distance must be a positive integer.")]
         public int Distance { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
 
         //Navigation Property
         public ICollection<Trip> Trips { get; set; } = new List<Trip>();

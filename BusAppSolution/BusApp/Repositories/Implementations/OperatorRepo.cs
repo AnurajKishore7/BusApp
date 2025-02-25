@@ -23,7 +23,7 @@ namespace BusApp.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetAllOperatorsAsync: {ex.Message}");
+                Console.WriteLine($"Error in GetAllOperatorsAsync (Repo): {ex.Message}");
                 return new List<TransportOperator>();
             }
         }
@@ -36,7 +36,7 @@ namespace BusApp.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetOperatorByIdAsync: {ex.Message}");
+                Console.WriteLine($"Error in GetOperatorByIdAsync (Repo): {ex.Message}");
                 return null;
             }
         }
@@ -49,7 +49,7 @@ namespace BusApp.Repositories.Implementations
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetOperatorByEmailAsync: {ex.Message}");
+                Console.WriteLine($"Error in GetOperatorByEmailAsync (Repo): {ex.Message}");
                 return null;
             }
         }

@@ -29,6 +29,8 @@ namespace BusApp.Models
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
 
         //Navigation Properties
         public BusRoute? BusRoute { get; set; }

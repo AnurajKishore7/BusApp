@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 using BusApp.Repositories.Implementations;
 using BusApp.Repositories.Interfaces;
@@ -6,11 +5,7 @@ using BusApp.Services.Implementations;
 using BusApp.Services.Interfaces;
 using BusReservationApp.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -85,6 +80,7 @@ namespace BusApp
             builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped<IClientRepo, ClientRepo>();
             builder.Services.AddScoped<IOperatorRepo, OperatorRepo>();
+            builder.Services.AddScoped<IBusesRepo,  BusesRepo>();
             #endregion
 
             // Service Layer Dependency Injection
@@ -92,6 +88,7 @@ namespace BusApp
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IClientService, ClientService>();
             builder.Services.AddScoped<IOperatorService, OperatorService>();
+            builder.Services.AddScoped<IBusesService, BusesService>();
             #endregion
 
             // JWT Authentication & Authorization

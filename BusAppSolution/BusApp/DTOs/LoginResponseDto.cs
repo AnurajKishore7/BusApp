@@ -6,8 +6,8 @@
         public string Email { get; set; }
         public string Role { get; set; }
 
-        public int ClientId { get; set; }
-        public int TransportOperatorId { get; set; }
+        //public int ClientId { get; set; }
+        //public int TransportOperatorId { get; set; }
 
         public string Message {  get; set; }
 
