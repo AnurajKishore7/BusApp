@@ -14,19 +14,23 @@ namespace BusApp.Models
         [ForeignKey("Trip")]
         public int TripId { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime BookedAt { get; set; } = DateTime.Now;  // Default to current time
+        [Required(ErrorMessage = "Journey date is required.")]
+        [Column(TypeName = "date")]
+        public DateTime JourneyDate { get; set; }
+
+        [Required(ErrorMessage = "Number of tickets is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "At least one ticket must be booked.")]
+        public int TicketCount { get; set; }
 
         [Required(ErrorMessage = "Status is required.")]
         [StringLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
-        [RegularExpression("^(Pending|Confirmed|Cancelled)$", ErrorMessage = "Status must be either Pending, Confirmed, or Cancelled.")]
-        public string Status { get; set; } = "Pending"; // Default status
+        public string Status { get; set; } = "Pending"; // Pending | Confirmed | Cancelled
 
-
-        //Navigation Properties
+        // Navigation Properties
         public Client? Client { get; set; }
         public Trip? Trip { get; set; }
         public ICollection<TicketPassenger> TicketPassengers { get; set; } = new List<TicketPassenger>();
         public Payment? Payment { get; set; }
     }
+
 }

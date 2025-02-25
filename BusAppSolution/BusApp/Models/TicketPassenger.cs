@@ -15,14 +15,11 @@ namespace BusApp.Models
         [StringLength(100, ErrorMessage = "Name cannot exceed 100 characters")]
         public string? Name { get; set; }
 
-        [Range(1, 100, ErrorMessage = "Seat number must be a positive integer and less than or equal to 100")]
-        public int SeatNo { get; set; }
-
         [Required(ErrorMessage = "Contact number is required")]
         [RegularExpression(@"^(\+91)?[0-9]\d{10}$", ErrorMessage = "Invalid Indian mobile number")]
-        public string? Contact { get; set; }
+        public string Contact { get; set; } = "";
 
-        public bool IsDisabled { get; set; }
+        public bool IsHandicapped { get; set; } = false;
 
 
         //Navigation Property

@@ -29,8 +29,7 @@ namespace BusApp.Services.Implementations
                     DOB = c.DOB,
                     Gender = c.Gender,
                     Contact = c.Contact,
-                    IsHandicapped = c.IsHandicapped,
-                    IsDeleted = c.IsDeleted
+                    IsHandicapped = c.IsHandicapped
                 });
             }
             catch (Exception ex)
@@ -55,8 +54,7 @@ namespace BusApp.Services.Implementations
                     DOB = client.DOB,
                     Gender = client.Gender,
                     Contact = client.Contact,
-                    IsHandicapped = client.IsHandicapped,
-                    IsDeleted = client.IsDeleted
+                    IsHandicapped = client.IsHandicapped
                 };
             }
             catch (Exception ex)
@@ -81,8 +79,7 @@ namespace BusApp.Services.Implementations
                     DOB = client.DOB,
                     Gender = client.Gender,
                     Contact = client.Contact,
-                    IsHandicapped = client.IsHandicapped,
-                    IsDeleted = client.IsDeleted
+                    IsHandicapped = client.IsHandicapped
                 };
             }
             catch (Exception ex)

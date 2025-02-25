@@ -6,6 +6,6 @@
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string? Contact { get; set; }
-        public bool IsDeleted { get; set; } = false;
+        //public bool IsDeleted { get; set; } = false;
     }
 }

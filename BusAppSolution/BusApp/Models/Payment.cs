@@ -18,15 +18,10 @@ namespace BusApp.Models
 
         [Required(ErrorMessage = "Payment method is required")]
         [StringLength(20, ErrorMessage = "Payment method cannot exceed 20 characters")]
-        public string? PaymentMethod { get; set; }  // CreditCard, DebitCard, UPI, NetBanking, Wallet
-
-
-        [Required]
-        public DateTime PaymentMadeAt { get; set; } = DateTime.Now; // Defaults to current  time
+        public string? PaymentMethod { get; set; } = "UPI";  // CreditCard, DebitCard, UPI, NetBanking, Wallet
 
         [Required(ErrorMessage = "Payment status is required")]
-        [RegularExpression("^(Paid|Pending|Failed)$", ErrorMessage = "Status must be Paid, Pending, or Failed")]
-        public string? Status { get; set; } // Paid, Pending, Failed
+        public string Status { get; set; } = "Pending";    // Paid, Pending, Failed 
 
 
         //Navigation Property

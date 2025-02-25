@@ -26,8 +26,7 @@ namespace BusApp.Services.Implementations
                     Id = c.Id,
                     Name = c.Name,
                     Email = c.Email,
-                    Contact = c.Contact,
-                    IsDeleted = c.IsDeleted
+                    Contact = c.Contact
                 });
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using BusApp.Models;
+using BusApp.Repositories.Interfaces;
 using BusReservationApp.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,7 @@ namespace BusApp.Repositories.Implementations
         {
             try
             {
-                return await _context.BusRoutes.ToListAsync();
+                return await _context.BusRoutes.Where(t => !t.IsDeleted).ToListAsync();
             }
             catch (Exception ex)
             {

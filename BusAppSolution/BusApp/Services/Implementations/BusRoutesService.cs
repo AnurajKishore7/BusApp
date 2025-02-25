@@ -1,5 +1,6 @@
 ﻿using BusApp.DTOs;
 using BusApp.Models;
+using BusApp.Repositories.Interfaces;
 using BusApp.Services.Interfaces;
 
 namespace BusApp.Services.Implementations
@@ -24,8 +25,7 @@ namespace BusApp.Services.Implementations
                     Source = route.Source,
                     Destination = route.Destination,
                     EstimatedDuration = route.EstimatedDuration,
-                    Distance = route.Distance,
-                    IsDeleted = route.IsDeleted
+                    Distance = route.Distance
                 }).ToList();
             }
             catch (Exception ex)
@@ -49,8 +49,7 @@ namespace BusApp.Services.Implementations
                     Source = busRoute.Source,
                     Destination = busRoute.Destination,
                     EstimatedDuration = busRoute.EstimatedDuration,
-                    Distance = busRoute.Distance,
-                    IsDeleted = busRoute.IsDeleted
+                    Distance = busRoute.Distance
                 };
             }
             catch (Exception ex)
@@ -82,8 +81,7 @@ namespace BusApp.Services.Implementations
                     Source = busRoute.Source,
                     Destination = busRoute.Destination,
                     EstimatedDuration = busRoute.EstimatedDuration,
-                    Distance = busRoute.Distance,
-                    IsDeleted = busRoute.IsDeleted
+                    Distance = busRoute.Distance
                 };
             }
             catch (Exception ex)
@@ -119,8 +117,7 @@ namespace BusApp.Services.Implementations
                     Source = createdBusRoute.Source,
                     Destination = createdBusRoute.Destination,
                     EstimatedDuration = createdBusRoute.EstimatedDuration,
-                    Distance = createdBusRoute.Distance,
-                    IsDeleted = createdBusRoute.IsDeleted
+                    Distance = createdBusRoute.Distance
                 };
             }
             catch (Exception ex)

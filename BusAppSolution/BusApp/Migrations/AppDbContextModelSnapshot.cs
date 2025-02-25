@@ -30,16 +30,19 @@ namespace BusApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BookedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("JourneyDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("TicketCount")
+                        .HasColumnType("int");
 
                     b.Property<int>("TripId")
                         .HasColumnType("int");
@@ -242,9 +245,6 @@ namespace BusApp.Migrations
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PaymentMadeAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -280,16 +280,13 @@ namespace BusApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDisabled")
+                    b.Property<bool>("IsHandicapped")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("SeatNo")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -347,8 +344,8 @@ namespace BusApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ArrivalTime")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("ArrivalTime")
+                        .HasColumnType("time");
 
                     b.Property<int>("BusId")
                         .HasColumnType("int");
@@ -356,8 +353,8 @@ namespace BusApp.Migrations
                     b.Property<int>("BusRouteId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DepartureTime")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("DepartureTime")
+                        .HasColumnType("time");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -377,20 +374,20 @@ namespace BusApp.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalTime = new DateTime(2025, 2, 10, 20, 30, 0, 0, DateTimeKind.Unspecified),
+                            ArrivalTime = new TimeSpan(0, 20, 30, 0, 0),
                             BusId = 1,
                             BusRouteId = 1,
-                            DepartureTime = new DateTime(2025, 2, 10, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new TimeSpan(0, 8, 0, 0, 0),
                             IsDeleted = false,
                             Price = 700m
                         },
                         new
                         {
                             Id = 2,
-                            ArrivalTime = new DateTime(2025, 2, 10, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            ArrivalTime = new TimeSpan(0, 14, 0, 0, 0),
                             BusId = 2,
                             BusRouteId = 3,
-                            DepartureTime = new DateTime(2025, 2, 10, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartureTime = new TimeSpan(0, 8, 0, 0, 0),
                             IsDeleted = false,
                             Price = 350m
                         });
@@ -434,34 +431,34 @@ namespace BusApp.Migrations
                         new
                         {
                             Email = "admin@gmail.com",
-                            CreatedAt = new DateTime(2025, 2, 25, 10, 30, 9, 573, DateTimeKind.Local).AddTicks(2326),
+                            CreatedAt = new DateTime(2025, 2, 26, 0, 23, 16, 89, DateTimeKind.Local).AddTicks(1403),
                             IsApproved = true,
                             IsDeleted = false,
                             Name = "Super Admin",
-                            PasswordHash = new byte[] { 17, 132, 67, 69, 109, 37, 147, 94, 50, 173, 115, 251, 106, 247, 23, 156, 68, 229, 95, 79, 211, 200, 42, 74, 235, 1, 108, 157, 42, 115, 12, 81, 4, 76, 144, 53, 54, 38, 223, 5, 53, 208, 226, 213, 122, 242, 117, 90, 114, 14, 144, 188, 117, 33, 42, 232, 78, 181, 26, 18, 90, 28, 54, 64 },
-                            PasswordSalt = new byte[] { 254, 164, 51, 53, 22, 253, 88, 249, 254, 40, 96, 31, 241, 34, 188, 193, 127, 60, 92, 221, 25, 41, 217, 73, 116, 68, 134, 203, 17, 42, 61, 103, 23, 250, 214, 153, 195, 49, 72, 185, 253, 28, 54, 28, 14, 169, 37, 166, 57, 134, 66, 249, 154, 223, 249, 108, 215, 190, 44, 84, 84, 84, 88, 70, 7, 215, 33, 57, 243, 247, 165, 123, 170, 95, 71, 88, 172, 184, 181, 43, 95, 55, 166, 144, 104, 59, 111, 164, 144, 13, 248, 182, 200, 56, 255, 10, 97, 178, 202, 246, 115, 33, 79, 56, 78, 242, 123, 163, 83, 200, 37, 197, 111, 91, 115, 88, 131, 17, 128, 183, 64, 104, 27, 146, 56, 9, 216, 5 },
+                            PasswordHash = new byte[] { 53, 28, 189, 98, 175, 199, 195, 17, 242, 159, 180, 240, 49, 186, 255, 180, 243, 248, 223, 149, 155, 187, 55, 228, 43, 29, 19, 41, 93, 223, 179, 93, 22, 118, 212, 68, 41, 118, 104, 110, 49, 61, 219, 80, 24, 119, 91, 29, 22, 82, 86, 122, 31, 79, 87, 5, 155, 85, 67, 233, 198, 103, 166, 80 },
+                            PasswordSalt = new byte[] { 142, 23, 189, 162, 4, 90, 242, 120, 121, 252, 39, 232, 255, 149, 208, 75, 220, 206, 223, 65, 19, 110, 188, 187, 119, 68, 38, 64, 42, 250, 229, 82, 81, 230, 168, 50, 58, 152, 215, 219, 212, 139, 182, 68, 195, 7, 251, 75, 144, 192, 75, 12, 151, 23, 10, 51, 10, 165, 18, 241, 225, 124, 253, 205, 15, 91, 234, 253, 248, 127, 124, 91, 45, 203, 103, 253, 22, 129, 252, 128, 220, 2, 230, 66, 182, 51, 88, 140, 138, 166, 148, 186, 207, 13, 187, 123, 213, 192, 226, 74, 171, 128, 124, 134, 10, 112, 112, 49, 182, 52, 142, 40, 164, 200, 160, 101, 76, 109, 43, 18, 78, 74, 212, 84, 143, 162, 55, 84 },
                             Role = "Admin"
                         },
                         new
                         {
                             Email = "smartbus@gmail.com",
-                            CreatedAt = new DateTime(2025, 2, 25, 10, 30, 9, 573, DateTimeKind.Local).AddTicks(2382),
+                            CreatedAt = new DateTime(2025, 2, 26, 0, 23, 16, 89, DateTimeKind.Local).AddTicks(1406),
                             IsApproved = true,
                             IsDeleted = false,
                             Name = "Smart Bus",
-                            PasswordHash = new byte[] { 13, 100, 239, 85, 80, 178, 117, 166, 123, 26, 141, 13, 89, 211, 203, 15, 73, 80, 112, 96, 161, 128, 82, 144, 115, 127, 117, 165, 49, 80, 250, 140, 43, 89, 184, 108, 249, 174, 62, 126, 166, 116, 20, 229, 243, 247, 170, 107, 195, 183, 220, 255, 80, 31, 197, 86, 169, 116, 163, 96, 170, 208, 218, 74 },
-                            PasswordSalt = new byte[] { 183, 179, 54, 138, 240, 3, 199, 220, 117, 247, 142, 4, 120, 185, 233, 30, 67, 94, 1, 215, 13, 143, 62, 198, 90, 62, 69, 163, 60, 13, 120, 121, 248, 134, 186, 148, 44, 2, 163, 203, 80, 54, 71, 20, 240, 142, 199, 98, 24, 134, 62, 101, 121, 153, 93, 65, 12, 200, 42, 131, 202, 116, 37, 36, 222, 165, 123, 61, 233, 28, 40, 221, 115, 148, 207, 240, 253, 16, 251, 122, 36, 68, 37, 230, 224, 110, 154, 47, 9, 132, 173, 118, 78, 180, 172, 131, 3, 35, 68, 92, 76, 238, 130, 8, 42, 66, 87, 30, 136, 136, 90, 132, 175, 113, 177, 77, 116, 58, 180, 22, 181, 90, 96, 98, 5, 172, 168, 16 },
+                            PasswordHash = new byte[] { 199, 18, 156, 241, 79, 19, 135, 94, 171, 148, 22, 40, 41, 233, 16, 222, 143, 12, 203, 169, 215, 4, 46, 235, 253, 236, 8, 190, 198, 137, 126, 229, 197, 189, 128, 137, 173, 147, 150, 169, 111, 226, 48, 135, 223, 190, 181, 213, 150, 17, 108, 8, 76, 144, 91, 239, 128, 33, 226, 195, 74, 108, 157, 0 },
+                            PasswordSalt = new byte[] { 206, 131, 39, 42, 27, 121, 88, 18, 216, 131, 68, 189, 233, 118, 38, 6, 100, 93, 43, 112, 159, 61, 25, 92, 100, 29, 180, 227, 228, 195, 115, 124, 65, 13, 45, 32, 137, 128, 216, 60, 126, 16, 161, 128, 201, 24, 200, 139, 49, 4, 33, 59, 96, 206, 214, 96, 141, 148, 73, 130, 92, 46, 182, 216, 218, 249, 225, 243, 112, 140, 54, 228, 94, 169, 98, 76, 11, 150, 121, 30, 251, 176, 152, 168, 197, 151, 240, 212, 64, 174, 35, 116, 51, 115, 212, 107, 68, 72, 154, 191, 168, 13, 162, 189, 241, 119, 115, 48, 67, 179, 94, 180, 232, 221, 90, 210, 150, 227, 180, 145, 219, 174, 121, 61, 114, 180, 241, 190 },
                             Role = "TransportOperator"
                         },
                         new
                         {
                             Email = "anuraj@gmail.com",
-                            CreatedAt = new DateTime(2025, 2, 25, 10, 30, 9, 573, DateTimeKind.Local).AddTicks(2385),
+                            CreatedAt = new DateTime(2025, 2, 26, 0, 23, 16, 89, DateTimeKind.Local).AddTicks(1408),
                             IsApproved = true,
                             IsDeleted = false,
                             Name = "Anuraj",
-                            PasswordHash = new byte[] { 172, 236, 228, 8, 233, 111, 200, 164, 103, 177, 238, 0, 16, 16, 118, 208, 140, 99, 219, 41, 178, 214, 46, 187, 41, 27, 117, 76, 84, 148, 2, 15, 161, 206, 206, 221, 231, 61, 255, 74, 218, 237, 250, 126, 68, 62, 208, 192, 172, 181, 47, 229, 70, 115, 68, 61, 29, 144, 142, 182, 118, 66, 183, 188 },
-                            PasswordSalt = new byte[] { 37, 55, 7, 242, 161, 185, 186, 194, 148, 160, 91, 166, 193, 184, 218, 89, 20, 162, 54, 60, 245, 251, 206, 91, 214, 9, 112, 177, 184, 32, 26, 119, 237, 177, 184, 34, 117, 100, 3, 21, 254, 90, 178, 210, 196, 35, 138, 174, 122, 61, 163, 87, 162, 67, 198, 240, 172, 52, 60, 216, 210, 251, 68, 111, 187, 32, 169, 75, 213, 80, 147, 247, 129, 15, 144, 49, 14, 152, 13, 43, 170, 21, 40, 216, 193, 132, 178, 156, 211, 137, 23, 243, 217, 208, 248, 128, 183, 29, 204, 119, 88, 169, 67, 245, 26, 242, 175, 65, 152, 195, 136, 211, 181, 212, 99, 223, 91, 211, 188, 55, 21, 93, 24, 80, 212, 220, 239, 238 },
+                            PasswordHash = new byte[] { 71, 120, 43, 237, 155, 255, 4, 249, 167, 143, 131, 215, 176, 191, 163, 223, 255, 48, 1, 48, 119, 76, 13, 193, 129, 223, 214, 27, 229, 210, 19, 86, 194, 219, 219, 81, 128, 195, 57, 175, 203, 231, 138, 192, 255, 202, 77, 116, 204, 87, 238, 189, 186, 215, 238, 125, 20, 255, 189, 144, 58, 53, 69, 118 },
+                            PasswordSalt = new byte[] { 202, 146, 83, 106, 205, 231, 108, 248, 75, 16, 24, 0, 100, 249, 127, 43, 142, 101, 210, 193, 248, 212, 198, 141, 16, 166, 103, 124, 193, 38, 206, 107, 46, 70, 240, 7, 208, 85, 227, 239, 86, 129, 176, 227, 198, 7, 203, 14, 249, 57, 179, 229, 83, 147, 216, 76, 179, 97, 105, 107, 15, 152, 30, 237, 43, 157, 217, 225, 141, 172, 197, 231, 176, 136, 247, 124, 215, 254, 249, 53, 202, 236, 116, 147, 145, 64, 0, 145, 147, 46, 70, 103, 59, 53, 245, 23, 129, 10, 171, 49, 58, 63, 31, 108, 64, 226, 76, 152, 85, 232, 185, 80, 255, 172, 168, 11, 15, 178, 71, 131, 69, 211, 105, 101, 126, 116, 91, 147 },
                             Role = "Client"
                         });
                 });

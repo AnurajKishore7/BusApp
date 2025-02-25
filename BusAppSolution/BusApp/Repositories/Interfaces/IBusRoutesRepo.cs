@@ -1,4 +1,6 @@
-﻿namespace BusApp.Models
+﻿using BusApp.Models;
+
+namespace BusApp.Repositories.Interfaces
 {
     public interface IBusRoutesRepo
     {

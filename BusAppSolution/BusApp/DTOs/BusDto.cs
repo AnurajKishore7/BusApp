@@ -10,6 +10,6 @@ namespace BusApp.DTOs
         public int OperatorId { get; set; }
         public string? BusType { get; set; }
         public int TotalSeats { get; set; }
-        public bool IsDeleted { get; set; } = false;
+        //public bool IsDeleted { get; set; } = false;
     }
 }

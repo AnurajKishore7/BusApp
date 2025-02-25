@@ -224,13 +224,14 @@ namespace BusReservationApp.Context
                new BusRoute { Id = 2, Source = "Kanyakumari", Destination = "Chennai", EstimatedDuration = "12:30", Distance = 750 },
                new BusRoute { Id = 3, Source = "Chennai", Destination = "Bangalore", EstimatedDuration = "06:00", Distance = 350 },
                new BusRoute { Id = 4, Source = "Bangalore", Destination = "Chennai", EstimatedDuration = "06:00", Distance = 350 }
-           );
+            );
 
             // Seeding Trip Data
             modelBuilder.Entity<Trip>().HasData(
-                new Trip { Id = 1, BusRouteId = 1, BusId = 1, DepartureTime = new DateTime(2025, 2, 10, 8, 0, 0), ArrivalTime = new DateTime(2025, 2, 10, 20, 30, 0), Price = 700 },
-                new Trip { Id = 2, BusRouteId = 3, BusId = 2, DepartureTime = new DateTime(2025, 2, 10, 8, 0, 0), ArrivalTime = new DateTime(2025, 2, 10, 14, 0, 0), Price = 350 }
+                new Trip { Id = 1, BusRouteId = 1, BusId = 1, DepartureTime = new TimeSpan(8, 0, 0), ArrivalTime = new TimeSpan(20, 30, 0), Price = 700 },
+                new Trip { Id = 2, BusRouteId = 3, BusId = 2, DepartureTime = new TimeSpan(8, 0, 0), ArrivalTime = new TimeSpan(14, 0, 0), Price = 350 }
             );
+
 
             base.OnModelCreating(modelBuilder);
 

@@ -17,12 +17,12 @@ namespace BusApp.Models
         public int BusId { get; set; }
 
         [Required(ErrorMessage = "Departure time is required.")]
-        [DataType(DataType.DateTime)]
-        public DateTime DepartureTime { get; set; }
+        [Column(TypeName = "time")]
+        public TimeSpan DepartureTime { get; set; }
 
         [Required(ErrorMessage = "Arrival time is required.")]
-        [DataType(DataType.DateTime)]
-        public DateTime ArrivalTime { get; set; }
+        [Column(TypeName = "time")]
+        public TimeSpan ArrivalTime { get; set; }
 
         [Required(ErrorMessage = "Price is required.")]
         [Range(0.1, double.MaxValue, ErrorMessage = "Price must be a positive value.")]

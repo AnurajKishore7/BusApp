@@ -1,5 +1,4 @@
 using System.Text;
-using BusApp.Models;
 using BusApp.Repositories.Implementations;
 using BusApp.Repositories.Interfaces;
 using BusApp.Services.Implementations;
@@ -83,6 +82,7 @@ namespace BusApp
             builder.Services.AddScoped<IOperatorRepo, OperatorRepo>();
             builder.Services.AddScoped<IBusesRepo,  BusesRepo>();
             builder.Services.AddScoped<IBusRoutesRepo, BusRoutesRepo>();
+            builder.Services.AddScoped<ITripsRepo, TripsRepo>();
             #endregion
 
             // Service Layer Dependency Injection
@@ -92,6 +92,7 @@ namespace BusApp
             builder.Services.AddScoped<IOperatorService, OperatorService>();
             builder.Services.AddScoped<IBusesService, BusesService>();
             builder.Services.AddScoped<IBusRoutesService,  BusRoutesService>();
+            builder.Services.AddScoped<ITripsService, TripsService>();
             #endregion
 
             // JWT Authentication & Authorization

@@ -28,8 +28,7 @@ namespace BusApp.Services.Implementations
                     BusNo = b.BusNo,
                     OperatorId = b.OperatorId,
                     BusType = b.BusType,
-                    TotalSeats = b.TotalSeats,
-                    IsDeleted = b.IsDeleted
+                    TotalSeats = b.TotalSeats
                     
                 }).ToList();
             }
@@ -61,8 +60,7 @@ namespace BusApp.Services.Implementations
                     BusNo = b.BusNo,
                     BusType = b.BusType,
                     TotalSeats = b.TotalSeats,
-                    OperatorId = b.OperatorId,
-                    IsDeleted= b.IsDeleted
+                    OperatorId = b.OperatorId
                 }).ToList();
             }
             catch (Exception ex)
@@ -106,9 +104,7 @@ namespace BusApp.Services.Implementations
                     BusNo = bus.BusNo,
                     BusType = bus.BusType,
                     TotalSeats = bus.TotalSeats,
-                    OperatorId = bus.OperatorId,
-                    IsDeleted = bus.IsDeleted
-
+                    OperatorId = bus.OperatorId
                 };
             }
             catch (Exception ex)

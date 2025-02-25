@@ -19,7 +19,7 @@ namespace BusApp.Repositories.Implementations
         {
             try
             {
-                return await _context.Buses.ToListAsync();
+                return await _context.Buses.Where(t => !t.IsDeleted).ToListAsync();
             }
             catch (Exception ex)
             {
