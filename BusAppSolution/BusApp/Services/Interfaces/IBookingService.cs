@@ -1,0 +1,14 @@
+﻿using BusApp.DTOs;
+
+namespace BusApp.Services.Interfaces
+{
+    public interface IBookingService
+    {
+        Task<IEnumerable<BookingResponseDto>> GetAllAsync();
+        Task<BookingResponseDto?> GetByIdAsync(int bookingId);
+        Task<IEnumerable<BookingResponseDto>> GetBookingsByClientIdAsync(int clientId);
+        Task<BookingResponseDto> AddBookingAsync(BookingDto bookingDto, string userEmail);
+        Task<bool> CancelBookingAsync(int bookingId);
+        Task<int> GetAvailableSeatsAsync(int tripId, DateTime journeyDate);
+    }
+}

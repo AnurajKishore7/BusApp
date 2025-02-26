@@ -11,5 +11,6 @@ namespace BusApp.Repositories.Interfaces
         Task<bool> AddBusAsync(Bus bus);
         Task<bool> UpdateBusAsync(int busId, UpdateBusDto updateDto);
         Task<bool> DeleteBusAsync(int busId);
+        Task<int> GetTotalSeatsByBusIdAsync(int busId);
     }
 }

@@ -115,5 +115,28 @@ namespace BusApp.Repositories.Implementations
                 return false;
             }
         }
+
+        public async Task<int> GetTotalSeatsByBusIdAsync(int busId)
+        {
+            try
+            {
+                var bus = await _context.Buses.FindAsync(busId);
+                if (bus == null)
+                {
+                    Console.WriteLine($"Bus not found for BusId: {busId}");
+                    return 0;
+                }
+
+                return bus.TotalSeats;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetTotalSeatsByBusIdAsync for BusId {busId}: {ex.Message}");
+                return 0;
+            }
+        }
+
+        
+
     }
 }

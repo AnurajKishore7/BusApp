@@ -1,7 +1,6 @@
 ﻿using BusApp.DTOs;
 using BusApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusApp.Controllers

@@ -83,6 +83,9 @@ namespace BusApp
             builder.Services.AddScoped<IBusesRepo,  BusesRepo>();
             builder.Services.AddScoped<IBusRoutesRepo, BusRoutesRepo>();
             builder.Services.AddScoped<ITripsRepo, TripsRepo>();
+            builder.Services.AddScoped<ITicketPassengerRepo, TicketPassengerRepo>();
+            builder.Services.AddScoped<IPaymentRepo, PaymentRepo>();
+            builder.Services.AddScoped<IBookingRepo, BookingRepo>();
             #endregion
 
             // Service Layer Dependency Injection
@@ -93,6 +96,9 @@ namespace BusApp
             builder.Services.AddScoped<IBusesService, BusesService>();
             builder.Services.AddScoped<IBusRoutesService,  BusRoutesService>();
             builder.Services.AddScoped<ITripsService, TripsService>();
+            builder.Services.AddScoped<ITicketPassengerService, TicketPassengerService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
             #endregion
 
             // JWT Authentication & Authorization
