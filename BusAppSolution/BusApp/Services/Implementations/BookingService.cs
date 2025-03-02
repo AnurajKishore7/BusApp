@@ -14,6 +14,7 @@ namespace BusApp.Services.Implementations
         private readonly IClientRepo _clientRepo;
         private readonly IBusesRepo _busRepo;
         private readonly IBusRoutesRepo _busRouteRepo;
+        private readonly IOperatorRepo _operatorRepo;
 
         public BookingService(
             IBookingRepo bookingRepo,
@@ -22,7 +23,8 @@ namespace BusApp.Services.Implementations
             ITripsRepo tripRepo,
             IClientRepo clientRepo,
             IBusesRepo busRepo,
-            IBusRoutesRepo busRouteRepo)
+            IBusRoutesRepo busRouteRepo,
+            IOperatorRepo operatorRepo)
         {
             _bookingRepo = bookingRepo;
             _ticketPassengerRepo = ticketPassengerRepo;
@@ -31,6 +33,7 @@ namespace BusApp.Services.Implementations
             _clientRepo = clientRepo;
             _busRepo = busRepo;
             _busRouteRepo = busRouteRepo;
+            _operatorRepo = operatorRepo;
         }
 
 
@@ -292,6 +295,85 @@ namespace BusApp.Services.Implementations
             {
                 Console.WriteLine($"Error in GetAvailableSeatsAsync for TripId {tripId} on {journeyDate}: {ex.Message}");
                 return 0;
+            }
+        }
+
+        public async Task<IEnumerable<TripSearchDetailsDto>> SearchTripsAsync(string source, string destination, DateTime journeyDate)
+        {
+            try
+            {
+                // Get trips by source and destination
+                var trips = await _tripRepo.GetTripsBySourceAndDestinationAsync(source, destination);
+                var tripDetailsList = new List<TripSearchDetailsDto>();
+
+                foreach (var trip in trips)
+                {
+                    // Get bus details
+                    var bus = await _busRepo.GetBusByIdAsync(trip.BusId);
+                    if (bus == null) continue;
+
+                    // Get operator name
+                    var operatorEntity = await _operatorRepo.GetOperatorByIdAsync(bus.OperatorId);
+                    if (operatorEntity == null) continue;
+
+                    // Get available seats
+                    int availableSeats = await GetAvailableSeatsAsync(trip.Id, journeyDate);
+
+                    tripDetailsList.Add(new TripSearchDetailsDto
+                    {
+                        TripId = trip.Id,
+                        OperatorName = operatorEntity.Name,
+                        BusNo = bus.BusNo,
+                        Departure = trip.DepartureTime,
+                        Arrival = trip.ArrivalTime,
+                        PricePerSeat = trip.Price,
+                        SeatsAvailable = availableSeats,
+                        TotalSeats = bus.TotalSeats,
+                        BusType = bus.BusType
+                    });
+                }
+
+                return tripDetailsList;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in SearchTripsAsync (Service): {ex.Message}");
+                return new List<TripSearchDetailsDto>();
+            }
+        }
+
+        public async Task<TripSearchDetailsDto?> GetTripDetailsAsync(int tripId, DateTime journeyDate)
+        {
+            try
+            {
+                var trip = await _tripRepo.GetTripByIdAsync(tripId);
+                if (trip == null) return null;
+
+                var bus = await _busRepo.GetBusByIdAsync(trip.BusId);
+                if (bus == null) return null;
+
+                var operatorEntity = await _operatorRepo.GetOperatorByIdAsync(bus.OperatorId);
+                if (operatorEntity == null) return null;
+
+                int availableSeats = await GetAvailableSeatsAsync(tripId, journeyDate);
+
+                return new TripSearchDetailsDto
+                {
+                    TripId = trip.Id,
+                    OperatorName = operatorEntity.Name,
+                    BusNo = bus.BusNo,
+                    Departure = trip.DepartureTime,
+                    Arrival = trip.ArrivalTime,
+                    PricePerSeat = trip.Price,
+                    SeatsAvailable = availableSeats,
+                    TotalSeats = bus.TotalSeats,
+                    BusType = bus.BusType
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetTripDetailsAsync (Service): {ex.Message}");
+                return null;
             }
         }
 

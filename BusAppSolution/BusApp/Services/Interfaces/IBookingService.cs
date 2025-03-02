@@ -10,5 +10,7 @@ namespace BusApp.Services.Interfaces
         Task<BookingResponseDto> AddBookingAsync(BookingDto bookingDto, string userEmail);
         Task<bool> CancelBookingAsync(int bookingId);
         Task<int> GetAvailableSeatsAsync(int tripId, DateTime journeyDate);
+        Task<IEnumerable<TripSearchDetailsDto>> SearchTripsAsync(string source, string destination, DateTime journeyDate);
+        Task<TripSearchDetailsDto?> GetTripDetailsAsync(int tripId, DateTime journeyDate);
     }
 }

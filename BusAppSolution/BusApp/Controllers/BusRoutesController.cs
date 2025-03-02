@@ -17,6 +17,7 @@ namespace BusApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,TransportOperator")]
         public async Task<IActionResult> GetAllBusRoutes()
         {
             try
@@ -31,6 +32,7 @@ namespace BusApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles ="Admin,TransportOperator")]
         public async Task<IActionResult> GetBusRouteById(int id)
         {
             try
@@ -52,6 +54,7 @@ namespace BusApp.Controllers
         }
 
         [HttpGet("search")]
+        [AllowAnonymous]
         public async Task<IActionResult> SearchBusRoute([FromQuery] string source, [FromQuery] string destination)
         {
             try

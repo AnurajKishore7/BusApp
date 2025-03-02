@@ -51,11 +51,18 @@ namespace BusApp.Repositories.Implementations
             return user;
         }
 
+        public async Task<List<User>> GetUsersByRoleAndApproval(string role, bool isApproved)
+        {
+            return await _context.Users
+              .Where(u => u.Role == role && u.IsApproved == isApproved && !u.IsDeleted)
+              .ToListAsync();
+        }
+
         public async Task<bool> ApproveTransportOperator(string name)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name && u.Role == "TransportOperator");
 
-            if (user == null || user.IsApproved)
+            if (user == null || user.IsApproved || user.IsDeleted)
                 return false;
 
             user.IsApproved = true; // Mark user as approved

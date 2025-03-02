@@ -1,6 +1,8 @@
 ﻿using BusApp.DTOs;
+using BusApp.Models;
 using BusApp.Repositories.Interfaces;
 using BusApp.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusApp.Services.Implementations
 {
@@ -80,15 +82,31 @@ namespace BusApp.Services.Implementations
             }
         }
 
-        public async Task<bool> UpdatePaymentStatusAsync(int bookingId, string status)
+        public async Task<bool> UpdatePaymentStatusAsync(int paymentId, string status, decimal newTotalAmount)
         {
             try
             {
-                return await _repo.UpdatePaymentStatusAsync(bookingId, status);
+                var payment = await _repo.GetByIdAsync(paymentId);
+                if (payment == null) return false;
+
+                return await _repo.UpdatePaymentStatusAsync(paymentId, status, newTotalAmount);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in UpdatePaymentStatusAsync (Service): {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdatePaymentMethodAsync(int paymentId, string paymentMethod)
+        {
+            try
+            {
+                return await _repo.UpdatePaymentMethodAsync(paymentId, paymentMethod);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in UpdatePaymentMethodAsync (Service): {ex.Message}");
                 return false;
             }
         }

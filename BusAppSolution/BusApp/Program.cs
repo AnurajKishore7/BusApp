@@ -124,6 +124,17 @@ namespace BusApp
             builder.Services.AddAuthorization();
             #endregion
 
+            //CORS Policy
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngular", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyMethod()  // Allows GET, POST, etc.
+                          .AllowAnyHeader(); // Allows headers like Content-Type
+                });
+            });
+
             var app = builder.Build();
 
             // Middleware 
@@ -132,8 +143,8 @@ namespace BusApp
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("AllowAngular");
 
-            
             app.UseAuthentication();
             app.UseAuthorization();
 

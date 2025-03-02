@@ -66,10 +66,27 @@ namespace BusApp.Controllers
 
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Login Error: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     new { message = "An error occurred while processing your request." });
+            }
+        }
+
+        [HttpGet("pending-operators")]
+        [Authorize(Roles = "Admin")] 
+        public async Task<IActionResult> GetPendingOperators()
+        {
+            try
+            {
+                var pendingOperators = await _authService.GetPendingOperators();
+                return Ok(pendingOperators);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                  new { message = "An error occurred while fetching pending operators.", error = ex.Message });
             }
         }
 

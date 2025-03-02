@@ -53,7 +53,6 @@ namespace BusApp.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,TransportOperator")]
         public async Task<IActionResult> GetBusById(int id)
         {
             try

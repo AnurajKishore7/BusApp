@@ -92,7 +92,7 @@ namespace BusApp.Controllers
         }
 
         // Cancel a booking
-        [HttpDelete("{bookingId}")]
+        [HttpPost("cancel/{bookingId}")]
         [Authorize(Roles = "Admin,Client,TransportOperator")]
         public async Task<IActionResult> CancelBooking(int bookingId)
         {
@@ -125,6 +125,41 @@ namespace BusApp.Controllers
                 return StatusCode(500, $"An error occurred while fetching available seats: {ex.Message}");
             }
         }
-    }
 
+        [HttpGet("search-trips")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SearchTrips([FromQuery] string source, [FromQuery] string destination, [FromQuery] DateTime journeyDate)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(source) || string.IsNullOrWhiteSpace(destination))
+                    return BadRequest("Source and destination are required.");
+
+                var tripDetails = await _bookingService.SearchTripsAsync(source, destination, journeyDate);
+                return Ok(tripDetails);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while searching trips: {ex.Message}");
+            }
+        }
+
+        [HttpGet("trip/{tripId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTripDetails(int tripId, [FromQuery] DateTime journeyDate)
+        {
+            try
+            {
+                var tripDetails = await _bookingService.GetTripDetailsAsync(tripId, journeyDate);
+                if (tripDetails == null)
+                    return NotFound("Trip not found.");
+                return Ok(tripDetails);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while fetching trip details: {ex.Message}");
+            }
+        }
+    }
 }
+            

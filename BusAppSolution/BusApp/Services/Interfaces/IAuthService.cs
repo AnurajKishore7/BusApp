@@ -5,9 +5,10 @@ namespace BusApp.Services.Interfaces
 {
         public interface IAuthService
         {
-            Task<ClientRegister> RegisterClient(ClientRegisterDto request);
+            Task<LoginResponseDto> RegisterClient(ClientRegisterDto request);
             Task<string> RegisterTransportOperator(TransportRegisterDto request);
             Task<LoginResponseDto> Login(LoginDto request);
+            Task<List<PendingOperatorDto>> GetPendingOperators();
             Task<bool> ApproveTransportOperator(string name);
         }
 }

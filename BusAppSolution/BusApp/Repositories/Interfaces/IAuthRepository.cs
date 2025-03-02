@@ -9,6 +9,7 @@ namespace BusApp.Repositories.Interfaces
         Task<User> RegisterClient(User user, Client client);
         Task<User> RegisterTransportOperator(User user);
         Task<bool> ApproveTransportOperator(string name);
+        Task<List<User>> GetUsersByRoleAndApproval(string role, bool isApproved);
     }
 
 }

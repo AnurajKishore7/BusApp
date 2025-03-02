@@ -12,6 +12,5 @@
 
         public int Distance { get; set; }
 
-        //public bool IsDeleted { get; set; } = false;
     }
 }

@@ -3,6 +3,7 @@ using BusApp.Models;
 using BusApp.Repositories.Interfaces;
 using BusApp.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -22,7 +23,7 @@ namespace BusApp.Services.Implementations
             _configuration = configuration;
         }
 
-        public async Task<ClientRegister> RegisterClient(ClientRegisterDto request)
+        public async Task<LoginResponseDto> RegisterClient(ClientRegisterDto request)
         {
             if (await _authRepository.UserExists(request.Email))
                 throw new Exception("User with this email already exists.");
@@ -56,12 +57,17 @@ namespace BusApp.Services.Implementations
 
             var createdUser = await _authRepository.RegisterClient(user, client);
 
+            // Generate JWT Token
+            string token = GenerateJwtToken(createdUser);
+
             // Convert User to UserDto before returning
-            return new ClientRegister
+            return new LoginResponseDto
             {
                 Name = createdUser.Name,
                 Email = createdUser.Email,
-                Role = createdUser.Role
+                Role = createdUser.Role,
+                Message = "Welcome to Bus Ticket Booking App",
+                Token = token
             };
         }
 
@@ -124,6 +130,16 @@ namespace BusApp.Services.Implementations
                 Message = message,
                 Token = token,
             };
+        }
+
+        public async Task<List<PendingOperatorDto>> GetPendingOperators()
+        {
+            var users = await _authRepository.GetUsersByRoleAndApproval("TransportOperator", false);
+            return users.Select(u => new PendingOperatorDto
+            {
+                Name = u.Name,
+                Email = u.Email
+            }).ToList();
         }
 
         public async Task<bool> ApproveTransportOperator(string name)

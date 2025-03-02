@@ -8,7 +8,8 @@ namespace BusApp.Repositories.Interfaces
         Task<Payment?> GetByIdAsync(int paymentId);
         Task<Payment?> GetByBookingIdAsync(int bookingId);
         Task<Payment> AddPaymentAsync(Payment payment);
-        Task<bool> UpdatePaymentStatusAsync(int paymentId, string status);
+        Task<bool> UpdatePaymentStatusAsync(int paymentId, string status, decimal totalAmount);
+        Task<bool> UpdatePaymentMethodAsync(int paymentId, string paymentMethod);
     }
 
 }

@@ -62,6 +62,7 @@ namespace BusApp.Controllers
         }
 
         [HttpGet("search")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetTripsBySourceAndDestination([FromQuery] string source, [FromQuery] string destination)
         {
             try
