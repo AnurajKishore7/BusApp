@@ -119,36 +119,33 @@ namespace BusApp.Services.Implementations
             try
             {
                 var bookings = await _bookingRepo.GetBookingsByClientIdWithTripDetailsAsync(clientId);
-
-                var bookingDtos = bookings.Select(booking => new BookingResponseDto
+                return bookings.Select(b => new BookingResponseDto
                 {
-                    Id = booking.Id,
-                    ClientId = booking.ClientId,
-                    TripId = booking.TripId,
-                    JourneyDate = booking.JourneyDate,
-                    TicketCount = booking.TicketCount,
-                    Status = booking.Status,
-                    ClientName = booking.Client?.Name ?? "Unknown",
-                    Source = booking.Trip.BusRoute.Source,
-                    Destination = booking.Trip.BusRoute.Destination,
-                    TotalAmount = booking.Payment.TotalAmount,
-                    PaymentMethod = booking.Payment.PaymentMethod,
-                    PaymentStatus = booking.Payment.Status,
-                    TicketPassengers = booking.TicketPassengers.Select(p => new TicketPassengerResponseDto
+                    Id = b.Id,
+                    ClientId = b.ClientId,
+                    TripId = b.TripId,
+                    JourneyDate = b.JourneyDate,
+                    TicketCount = b.TicketCount,
+                    Status = b.Status,
+                    TicketPassengers = b.TicketPassengers?.Select(tp => new TicketPassengerResponseDto
                     {
-                        Id = p.Id,
-                        BookingId = p.BookingId,
-                        PassengerName = p.Name,
-                        Contact = p.Contact,
-                        IsHandicapped = p.IsHandicapped
-                    }).ToList()
+                        Id = tp.Id,
+                        BookingId = tp.BookingId,
+                        PassengerName = tp.Name,
+                        Contact = tp.Contact,
+                        IsHandicapped = tp.IsHandicapped
+                    }).ToList() ?? new List<TicketPassengerResponseDto>(),
+                    ClientName = b.Client?.Name ?? "",
+                    Source = b.Trip?.BusRoute?.Source ?? "", 
+                    Destination = b.Trip?.BusRoute?.Destination ?? "",
+                    TotalAmount = b.Payment?.TotalAmount ?? 0,
+                    PaymentMethod = b.Payment?.PaymentMethod ?? "N/A",
+                    PaymentStatus = b.Payment?.Status ?? "Pending"
                 }).ToList();
-
-                return bookingDtos;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetBookingsByClientIdAsync (Service): {ex.Message}");
+                Console.WriteLine($"Error in GetBookingsByClientIdAsync: {ex.Message}");
                 return new List<BookingResponseDto>();
             }
         }

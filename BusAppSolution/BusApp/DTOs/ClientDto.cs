@@ -9,6 +9,5 @@
         public string? Gender { get; set; }
         public string? Contact { get; set; }
         public bool IsHandicapped { get; set; } = false;
-        //public bool IsDeleted { get; set; } = false;
     }
 }

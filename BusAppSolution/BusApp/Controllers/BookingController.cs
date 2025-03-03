@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using BusApp.DTOs;
+using BusApp.Services.Implementations;
 using BusApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,13 @@ namespace BusApp.Controllers
     public class BookingController : ControllerBase
     {
         private readonly IBookingService _bookingService;
+        private readonly IClientService _clientService;
 
-        public BookingController(IBookingService bookingService)
+        public BookingController(IBookingService bookingService,
+            IClientService clientService)
         {
             _bookingService = bookingService;
+            _clientService = clientService;
         }
 
         [HttpGet]
@@ -158,6 +162,31 @@ namespace BusApp.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"An error occurred while fetching trip details: {ex.Message}");
+            }
+        }
+
+        [HttpGet("mybookings")]
+        [Authorize(Roles = "Client")]
+        public async Task<IActionResult> GetClientBookings()
+        {
+            try
+            {
+               
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+                if (string.IsNullOrEmpty(userEmail))
+                    return Unauthorized("User email not found in token.");
+
+                
+                var client = await _clientService.GetClientByEmailAsync(userEmail);
+                if (client == null)
+                    return Unauthorized("Client not found for this email.");
+
+                var bookings = await _bookingService.GetBookingsByClientIdAsync(client.Id);
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while fetching your bookings: {ex.Message}");
             }
         }
     }
