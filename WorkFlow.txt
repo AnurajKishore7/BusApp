@@ -10,28 +10,118 @@
 	-- Return tasks
 	-- Register repositories in Program.cs
 5. Create DTOs
-	-- Request & response
+	-- Request & response for API calls
 6. Create Services
 	-- Interfaces & implementations
 	-- Inherit IServics & use IRepo
 	-- return Task
 	-- Register services in Program.cs
 7. Create Controllers
-	-- implement using IService
+	-- implement APIs using IService
 	-- Add RBAC
 	 
 
 Note: "Install required packages"
 
+Configure JWT settings in appsettings.json.
+Register JWT Authentication in Program.cs.
+
+
+
+
+// Helper: Create password hash
+private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+{
+    using (var hmac = new HMACSHA512())
+    {
+        passwordSalt = hmac.Key;
+        passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+    }
+}
+
+// Helper: Verify password hash
+private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+{
+    using (var hmac = new HMACSHA512(storedSalt))
+    {
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return computedHash.SequenceEqual(storedHash);
+    }
+}
+
+// Login user and generate JWT token
+public async Task<string> Login(UserLoginDto request)
+{
+    var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+    if (user == null || user.IsDeleted)
+        throw new Exception("Invalid email or password.");
+
+    if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+        throw new Exception("Invalid email or password.");
+
+    if (!user.IsApproved)
+        throw new Exception("User is not approved by admin.");
+
+    // Generate JWT Token
+    return GenerateJwtToken(user);
+}
+
+private string GenerateJwtToken(User user)
+{
+    // Get the JWT secret key from app settings
+    var secretKey = _configuration["Jwt:Secret"];
+    if (string.IsNullOrEmpty(secretKey))
+    {
+        throw new Exception("JWT secret key is missing in configuration.");
+    }
+
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+    var claims = new List<Claim>
+{
+    new Claim(ClaimTypes.NameIdentifier, user.Email), // Email as primary key
+    new Claim(ClaimTypes.Email, user.Email),
+    new Claim(ClaimTypes.Role, user.Role)
+};
+
+    var token = new JwtSecurityToken(
+        expires: DateTime.Now.AddDays(7), // Token expiration time
+        signingCredentials: credentials,
+        claims: claims
+    );
+
+    return new JwtSecurityTokenHandler().WriteToken(token);
+}
+
+private string GenerateJwtToken(User user)
+{
+    // Get the JWT secret key from app settings
+    var secretKey = _configuration["Jwt:Secret"];
+    if (string.IsNullOrEmpty(secretKey))
+    {
+        throw new Exception("JWT secret key is missing in configuration.");
+    }
+
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+    var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+    var claims = new List<Claim>
+{
+    new Claim(ClaimTypes.NameIdentifier, user.Email), // Email as primary key
+    new Claim(ClaimTypes.Email, user.Email),
+    new Claim(ClaimTypes.Role, user.Role)
+};
+
+    var token = new JwtSecurityToken(
+        expires: DateTime.Now.AddDays(7), // Token expiration time
+        signingCredentials: credentials,
+        claims: claims
+    );
+
+    return new JwtSecurityTokenHandler().WriteToken(token);
+}
+
+
 
  
-admin: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImFkbWluQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFkbWluQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzQxMDI2OTYyfQ.dRQgWOJ6cCP86MKiTiCbWeJy9uDlCuNtnt9ZHURWIgc
-
-smartbus:
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6InNtYXJ0YnVzQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InNtYXJ0YnVzQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlRyYW5zcG9ydE9wZXJhdG9yIiwiZXhwIjoxNzQxMTIwMDAyfQ.W2ndNO0KWRI5rnFQZIIw9Cs8_RuwCi7Mh2WwlvMm8_A
-
-anuraj:
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImFudXJhakBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhbnVyYWpAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2xpZW50IiwiZXhwIjoxNzQxMjA0NTQ2fQ.RapvU_QdkUcobgY4OaIAL6IjVzH8mQgMiZYK4qCUmPE
-
-2025-02-28T00:00:00Z
-
