@@ -1,0 +1,157 @@
+1️⃣ Models (Entities) – Define database tables.
+2️⃣ DbContext (Database Connection & ORM Mapping) – Set up database interaction.
+3️⃣ Interfaces (Repository Contracts) – Define CRUD methods.
+4️⃣ Repositories (Database Interactions) – Implement repository methods using DbContext.
+5️⃣ DTOs (Data Transfer Objects) – Define request/response models.
+6️⃣ Services (Business Logic Layer) – Implement business logic and use repositories.
+7️⃣ Exceptions (Error Handling) – Implement global exception handling.
+8️⃣ Controllers (API Endpoints) – Expose API methods and call services.
+
+=====================================
+1. Users
+Email [PK]
+Name
+PasswordHash
+PasswordSalt
+Role
+IsApproved
+CreatedAt
+IsDeleted
+
+2. TransportOperators
+Id [PK]
+Name
+Email [FK references from the Users table]
+Contact
+IsDeleted
+
+3. Clients
+Id [PK]
+Name
+Email [FK] (optional, references Users)
+DOB
+Gender
+Contact
+IsHandicapped
+IsDeleted
+
+
+5. Buses
+Id [PK]
+BusNo
+OperatorId [FK, references TransportOperators]
+BusType
+TotalSeats
+IsDeleted
+
+6. BusRoutes
+Id [PK]
+Source
+Destination
+EstimatedDuration
+Distance
+IsDeleted
+
+7. Trips
+Id [PK]
+BusRouteId [FK, references Buses]
+BusId [FK, references Routes]
+DepartureTime
+ArrivalTime
+Price
+IsDeleted
+
+8. Bookings
+Id [PK]
+ClientId [FK, references Clients] (client who made the booking)
+TripId [FK, references Trips]
+JourneyDate
+TicketCount
+Status
+BookedAt
+
+9. TicketPassengers (Details of traveling passengers for each booking)
+Id [PK]
+BookingId [FK, references Bookings]
+PassengerName
+Age
+Gender
+Contact
+SeatNumber (e.g., "A1", "B2")
+IsHandicapped
+
+10. Payments
+Id [PK]
+BookingId [FK, references Bookings]
+TotalAmount
+PaymentMethod
+Status
+
+11. BusSeats
+Id [pk]
+BusId [Fk, references Buses]
+SeatNumber (e.g., "A1", "B2")
+IsDeleted
+======================================
+
+1. Users → TransportOperators
+--Relationship: One-to-One (1:1)
+--Foreign Key: TransportOperators.Email → Users.Email
+
+2. Users → Clients
+--Relationship: One-to-One(1:1)
+--Foreign Key: Clients.Email → Users.Email
+--Explanation:
+	A client (ticket booker) can be a registered user (with login credentials).
+	However, the system allows clients to book tickets without being a registered user.
+
+3. TransportOperators → Buses
+--Relationship: One-to-Many (1:N)
+--Foreign Key: Buses.OperatorId → TransportOperators.Id
+--Explanation: A transport operator can own multiple buses, but a bus belongs to only one 	operator.
+
+4. Routes → Trips
+--Relationship: One-to-Many (1:N)
+--Foreign Key: Trips.RouteId → Routes.Id
+--Explanation: A single route (e.g., City A → City B) can have multiple scheduled trips on 	different buses.
+
+5. Buses → Trips
+--Relationship: One-to-Many (1:N)
+--Foreign Key: Trips.BusId → Buses.Id
+--Explanation: A bus can have multiple trips scheduled over time, but each trip is assigned to only one bus.
+
+6. Clients → Bookings
+--Relationship: One-to-Many (1:N)
+--Foreign Key: Bookings.ClientId → Clients.Id
+--Explanation: A client can book multiple tickets over time, but each booking belongs to a 	single client.
+
+7. Trips → Bookings
+--Relationship: One-to-Many (1:N)
+--Foreign Key: Bookings.TripId → Trips.Id
+--Explanation: Multiple clients can book seats for the same trip.
+
+8. Bookings → TicketPassengers
+--Relationship: One-to-Many (1:N)
+--Foreign Key: TicketPassengers.BookingId → Bookings.Id
+--Explanation:
+	A single booking may include multiple passengers (e.g., a family traveling together). Each ticketed passenger is linked to a booking, with a unique seat number for that trip.
+
+9. Bookings → Payments
+--Relationship: One-to-One (1:1)
+--Foreign Key: Payments.BookingId → Bookings.Id
+--Explanation:
+	Each booking generates one payment transaction.
+
+10. TicketPassengers → Bookings
+(Derived Relationship with Trips & Buses)
+--Relationship: One-to-One (1:1)
+Indirect Relationships:
+	Each passenger (TicketPassengers) belongs to a booking, which belongs to a trip, which is assigned to a bus.
+
+11. Buses -> BusSeats
+--Relationship: One-to-Many (1:n)
+A single bus may include multiple seats 
+
+
+
+==============================================

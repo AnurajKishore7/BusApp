@@ -1,0 +1,10 @@
+# Ignore .git and .github directories
+.git/
+.github/
+
+# Ignore .vs folder inside BusAppSolution
+BusAppSolution/.vs/
+
+# Ignore bin and obj folders in any subdirectory
+**/bin/
+**/obj/

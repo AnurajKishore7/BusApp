@@ -1,0 +1,250 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Project\\BusReservation\\BusAppSolution\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\controllers\\busescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\controllers\\busescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\dtos\\busdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\dtos\\busdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\models\\bus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\models\\bus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\repositories\\implementations\\busesrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\repositories\\implementations\\busesrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\dtos\\newbusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\dtos\\newbusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\dtos\\updatebusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\dtos\\updatebusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\services\\interfaces\\ibusesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\services\\interfaces\\ibusesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\repositories\\interfaces\\ibusesrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\repositories\\interfaces\\ibusesrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\services\\implementations\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\services\\implementations\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\dtos\\pendingoperatordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\dtos\\pendingoperatordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|c:\\project\\busreservation\\busappsolution\\busapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F27570-C63B-4C71-A256-617630996D8A}|BusApp\\BusApp.csproj|solutionrelative:busapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BusDto.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\DTOs\\BusDto.cs",
+              "RelativeDocumentMoniker": "BusApp\\DTOs\\BusDto.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\DTOs\\BusDto.cs",
+              "RelativeToolTip": "BusApp\\DTOs\\BusDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T06:46:08.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UpdateBusDto.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\DTOs\\UpdateBusDto.cs",
+              "RelativeDocumentMoniker": "BusApp\\DTOs\\UpdateBusDto.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\DTOs\\UpdateBusDto.cs",
+              "RelativeToolTip": "BusApp\\DTOs\\UpdateBusDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T10:45:22.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NewBusDto.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\DTOs\\NewBusDto.cs",
+              "RelativeDocumentMoniker": "BusApp\\DTOs\\NewBusDto.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\DTOs\\NewBusDto.cs",
+              "RelativeToolTip": "BusApp\\DTOs\\NewBusDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T06:46:22.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BusesController.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Controllers\\BusesController.cs",
+              "RelativeDocumentMoniker": "BusApp\\Controllers\\BusesController.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Controllers\\BusesController.cs",
+              "RelativeToolTip": "BusApp\\Controllers\\BusesController.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAswCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T06:36:46.6Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IBusesService.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Services\\Interfaces\\IBusesService.cs",
+              "RelativeDocumentMoniker": "BusApp\\Services\\Interfaces\\IBusesService.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Services\\Interfaces\\IBusesService.cs",
+              "RelativeToolTip": "BusApp\\Services\\Interfaces\\IBusesService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T06:46:57.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BusesRepo.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Repositories\\Implementations\\BusesRepo.cs",
+              "RelativeDocumentMoniker": "BusApp\\Repositories\\Implementations\\BusesRepo.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Repositories\\Implementations\\BusesRepo.cs",
+              "RelativeToolTip": "BusApp\\Repositories\\Implementations\\BusesRepo.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAgwDMAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T11:35:25.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Bus.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Models\\Bus.cs",
+              "RelativeDocumentMoniker": "BusApp\\Models\\Bus.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Models\\Bus.cs",
+              "RelativeToolTip": "BusApp\\Models\\Bus.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAowCMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T06:46:38.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IBusesRepo.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Repositories\\Interfaces\\IBusesRepo.cs",
+              "RelativeDocumentMoniker": "BusApp\\Repositories\\Interfaces\\IBusesRepo.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Repositories\\Interfaces\\IBusesRepo.cs",
+              "RelativeToolTip": "BusApp\\Repositories\\Interfaces\\IBusesRepo.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T06:47:10.938Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "PendingOperatorDto.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\DTOs\\PendingOperatorDto.cs",
+              "RelativeDocumentMoniker": "BusApp\\DTOs\\PendingOperatorDto.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\DTOs\\PendingOperatorDto.cs",
+              "RelativeToolTip": "BusApp\\DTOs\\PendingOperatorDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T17:56:56.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Services\\Implementations\\AuthService.cs",
+              "RelativeDocumentMoniker": "BusApp\\Services\\Implementations\\AuthService.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Services\\Implementations\\AuthService.cs",
+              "RelativeToolTip": "BusApp\\Services\\Implementations\\AuthService.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAYwFMAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T17:45:21.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Context\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "BusApp\\Context\\AppDbContext.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Context\\AppDbContext.cs",
+              "RelativeToolTip": "BusApp\\Context\\AppDbContext.cs",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAiwJUAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T20:01:52.556Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "BusApp\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "BusApp\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAkwE0AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T17:40:25.792Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Program.cs",
+              "RelativeDocumentMoniker": "BusApp\\Program.cs",
+              "ToolTip": "C:\\Project\\BusReservation\\BusAppSolution\\BusApp\\Program.cs",
+              "RelativeToolTip": "BusApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-27T04:00:23.326Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
