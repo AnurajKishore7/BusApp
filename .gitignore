@@ -1,4 +1,4 @@
-# Ignore .git and .github directories
+# Ignore Git and GitHub directories
 .git/
 .github/
 
@@ -8,3 +8,26 @@ BusAppSolution/.vs/
 # Ignore bin and obj folders in any subdirectory
 **/bin/
 **/obj/
+
+# Ignore node_modules for Angular frontend
+Angular/BusAppFrontend/node_modules/
+
+# Ignore Angular build outputs
+Angular/BusAppFrontend/dist/
+Angular/BusAppFrontend/.angular/
+
+# Ignore environment files (use environment.example.ts instead)
+Angular/BusAppFrontend/src/environments/environment.ts
+Angular/BusAppFrontend/src/environments/environment.prod.ts
+
+# Ignore Visual Studio & VS Code user settings
+.vscode/
+.vs/
+Angular/BusAppFrontend/.vscode/
+
+# Ignore logs
+**/*.log
+
+# Ignore OS-specific files
+Thumbs.db
+.DS_Store
