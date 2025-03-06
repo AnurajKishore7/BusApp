@@ -122,7 +122,7 @@ namespace BusApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "TransportOperator,Admin")]
+        [Authorize(Roles = "TransportOperator")]
         public async Task<IActionResult> DeleteTrip(int id)
         {
             try

@@ -7,8 +7,10 @@ import { TransportOperatorsComponent } from './admin/transport-operators/transpo
 import { BusesComponent as AdminBusesComponent } from './admin/buses/buses.component';
 import { OperatorDashboardComponent } from './operator/operator-dashboard/operator-dashboard.component';
 import { BusRoutesComponent as AdminBusRoutesComponent } from './admin/bus-routes/bus-routes.component';
+import { TripsComponent as AdminTripsComponent } from './admin/trips/trips.component';
 import { BusesComponent as OperatorBusesComponent } from './operator/buses/buses.component';
 import { BusRoutesComponent as OperatorBusRoutesComponent } from './operator/bus-routes/bus-routes.component';
+import { TripsComponent as OperatorTripsComponent } from './operator/trips/trips.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
 
@@ -37,7 +39,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'transport-operators', pathMatch: 'full' },
       { path: 'transport-operators', component: TransportOperatorsComponent },
       { path: 'buses', component: AdminBusesComponent },
-      { path: 'bus-routes', component:  AdminBusRoutesComponent  }
+      { path: 'bus-routes', component:  AdminBusRoutesComponent  },
+      { path: 'trips', component: AdminTripsComponent }
     ]
   },
   { 
@@ -48,7 +51,8 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'buses', pathMatch: 'full' },
       { path: 'buses', component: OperatorBusesComponent },
-      { path: 'bus-routes', component: OperatorBusRoutesComponent }
+      { path: 'bus-routes', component: OperatorBusRoutesComponent },
+      { path: 'trips', component: OperatorTripsComponent }
     ]
   }
 ];

@@ -122,16 +122,11 @@ namespace BusApp.Services.Implementations
         {
             try
             {
-                // Validate input DTO
+                
                 if (dto == null)
                 {
                     throw new ArgumentException("Trip data cannot be null.");
                 }
-
-                //if (dto.DepartureTime >= dto.ArrivalTime)
-                //{
-                //    throw new ArgumentException("Departure time must be earlier than arrival time.");
-                //}
 
                 var trip = new Trip
                 {

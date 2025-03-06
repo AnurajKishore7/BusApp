@@ -10,7 +10,9 @@
         <li>
           <a (click)="navigateTo('bus-routes')" class="block p-2 hover:bg-red-700 cursor-pointer" [class.bg-red-700]="router.url.includes('bus-routes')">Bus Routes</a>
         </li>
-        <li><span class="block p-2 opacity-50">Trips (Coming Soon)</span></li>
+        <li>
+          <a (click)="navigateTo('trips')" class="block p-2 hover:bg-red-700 cursor-pointer" [class.bg-red-700]="router.url.includes('trips')">Trips</a>
+        </li>
       </ul>
       <!-- Back Button -->
       <div class="mt-auto pb-4">
