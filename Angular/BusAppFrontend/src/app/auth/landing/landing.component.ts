@@ -1,51 +1,88 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { PopupService } from '../popup.service';// Add this
-import { TransportRegister } from '../../core/models/transport-register.dto';
-import { NgIconComponent } from '@ng-icons/core';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroTruck, heroMapPin, heroCalendar, heroArrowsUpDown } from '@ng-icons/heroicons/outline';
+import { ionLogoFacebook, ionLogoInstagram, ionLogoTwitter, ionLogoLinkedin } from '@ng-icons/ionicons';
 
 @Component({
-  selector: 'app-signup-operator',
+  selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './landing.component.html', // Fix this
-  styleUrls: ['./landing.component.css']
+  imports: [CommonModule, FormsModule, NgIconComponent],
+  templateUrl: './landing.component.html',
+  styleUrls: ['./landing.component.css'],
+  providers: [
+    provideIcons({
+      heroTruck,
+      heroMapPin,
+      heroCalendar,
+      heroArrowsUpDown,
+      ionLogoFacebook,
+      ionLogoInstagram,
+      ionLogoTwitter,
+      ionLogoLinkedin
+    })
+  ]
 })
-export class LandingComponent {
-  operator: TransportRegister = {
-    name: '',
-    email: '',
-    password: ''
-  };
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
+export class LandingComponent implements OnInit, AfterViewInit {
+  fromStation: string = '';
+  toStation: string = '';
+  journeyDate: string = '';
+  minDate: string = '';
+  navbarHeight: number = 0; 
+  message: string = '';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private popupService: PopupService // Add this
-  ) {}
+  constructor(private router: Router) {}
 
-  onSubmit() {
-    this.authService.registerOperator(this.operator).subscribe({
-      next: (message) => {
-        this.successMessage = message;
-        setTimeout(() => this.popupService.triggerLoginPopup(), 2000); // Update this
-      },
-      error: (err) => {
-        this.errorMessage = err.error?.message || 'Registration failed';
+  ngOnInit() {
+    const now = new Date();
+    const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    this.journeyDate = localDate.toISOString().split('T')[0]; 
+    this.minDate = this.journeyDate; 
+    this.updateNavbarHeight();
+  }
+
+  ngAfterViewInit() {
+    this.updateNavbarHeight();
+  }
+
+  private updateNavbarHeight() {
+    const navbar = document.querySelector('nav'); 
+    if (navbar) {
+      this.navbarHeight = navbar.getBoundingClientRect().height; 
+    }
+  }
+
+  setToday() {
+    const now = new Date();
+    const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    this.journeyDate = localDate.toISOString().split('T')[0]; // "2025-03-07"
+  }
+
+  setTomorrow() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const localTomorrow = new Date(tomorrow.getTime() - tomorrow.getTimezoneOffset() * 60000);
+    this.journeyDate = localTomorrow.toISOString().split('T')[0]; // "2025-03-08"
+  }
+
+  swapStations() {
+    [this.fromStation, this.toStation] = [this.toStation, this.fromStation];
+  }
+
+  onSearch() {
+    if (!this.fromStation || !this.toStation) {
+      this.message = 'Please enter both From and To stations.'; 
+      return;
+    }
+    this.message = ''; 
+    this.router.navigate(['/trip-results'], {
+      queryParams: {
+        source: this.fromStation,
+        destination: this.toStation,
+        journeyDate: this.journeyDate
       }
     });
-  }
-
-  openLoginPopup() {
-    this.popupService.triggerLoginPopup(); // Use service
-  }
-
-  closeSignup() {
-    this.router.navigate(['/']);
   }
 }

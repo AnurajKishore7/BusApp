@@ -373,8 +373,6 @@ namespace BusApp.Services.Implementations
                 return null;
             }
         }
-
-
     }
 
 }

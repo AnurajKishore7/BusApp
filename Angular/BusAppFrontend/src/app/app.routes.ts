@@ -13,6 +13,7 @@ import { BusRoutesComponent as OperatorBusRoutesComponent } from './operator/bus
 import { TripsComponent as OperatorTripsComponent } from './operator/trips/trips.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
+import { TripResultsComponent } from './auth/trip-results/trip-results.component';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -54,5 +55,9 @@ export const routes: Routes = [
       { path: 'bus-routes', component: OperatorBusRoutesComponent },
       { path: 'trips', component: OperatorTripsComponent }
     ]
+  },
+  { 
+    path: 'trip-results', 
+    component: TripResultsComponent 
   }
 ];

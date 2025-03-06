@@ -11,5 +11,4 @@
         public string SeatNumber { get; set; }
         public bool IsHandicapped { get; set; }
     }
-
 }

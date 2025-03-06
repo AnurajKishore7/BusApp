@@ -1,0 +1,32 @@
+/* Background with cityscape (simulated with Tailwind) */
+.bg-bus-white {
+    background-color: #f9fafb; /* Light grey-white */
+  }
+  .bg-bus-grey {
+    background-color: #e5e7eb; /* Light grey */
+  }
+  .bg-bus-red {
+    background-color: #dc2626; /* Red from your theme */
+  }
+  
+  /* Form container */
+  .shadow-lg {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .shadow-inner {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Input and button styling */
+  input {
+    @apply border-gray-300 rounded-lg focus:ring-2 focus:ring-bus-red;
+  }
+  button {
+    @apply rounded-lg focus:outline-none;
+  }
+  .bg-gray-200:hover {
+    @apply bg-gray-300;
+  }
+  .bg-bus-red:hover {
+    @apply bg-red-700;
+  }
