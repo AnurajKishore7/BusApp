@@ -81,10 +81,14 @@ namespace BusApp.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                    return BadRequest(string.Join("; ", errors));
+                }
                 var createdBusRoute = await _busRoutesService.AddBusRouteAsync(newBusRouteDto);
                 if (createdBusRoute == null)
                     return StatusCode(500, "Failed to add bus route.");
-
                 return CreatedAtAction(nameof(GetBusRouteById), new { id = createdBusRoute.Id }, createdBusRoute);
             }
             catch (ArgumentException ex)

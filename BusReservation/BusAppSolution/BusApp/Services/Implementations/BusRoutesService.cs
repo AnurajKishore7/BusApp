@@ -98,11 +98,14 @@ namespace BusApp.Services.Implementations
                 if (newBusRouteDto.Source == newBusRouteDto.Destination)
                     throw new ArgumentException("Source and destination cannot be the same.");
 
+                if (!TimeSpan.TryParseExact(newBusRouteDto.EstimatedDuration, "hh\\:mm", null, out var duration))
+                    throw new ArgumentException("Invalid EstimatedDuration format. Use HH:mm (e.g., 12:30).");
+
                 var newBusRoute = new BusRoute
                 {
                     Source = newBusRouteDto.Source,
                     Destination = newBusRouteDto.Destination,
-                    EstimatedDuration = newBusRouteDto.EstimatedDuration,
+                    EstimatedDuration = duration, // Use parsed TimeSpan
                     Distance = newBusRouteDto.Distance,
                     IsDeleted = false
                 };
@@ -142,10 +145,14 @@ namespace BusApp.Services.Implementations
                 if (existingRoute == null || existingRoute.IsDeleted)
                     throw new KeyNotFoundException("Bus route not found.");
 
+                // Parse EstimatedDuration from string to TimeSpan
+                if (!TimeSpan.TryParseExact(updatedBusRouteDto.EstimatedDuration, "hh\\:mm", null, out var duration))
+                    throw new ArgumentException("Invalid EstimatedDuration format. Use HH:mm (e.g., 12:30).");
+
                 // Update properties
                 existingRoute.Source = updatedBusRouteDto.Source;
                 existingRoute.Destination = updatedBusRouteDto.Destination;
-                existingRoute.EstimatedDuration = updatedBusRouteDto.EstimatedDuration;
+                existingRoute.EstimatedDuration = duration; // Assign parsed TimeSpan
                 existingRoute.Distance = updatedBusRouteDto.Distance;
 
                 // Save changes

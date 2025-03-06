@@ -81,17 +81,19 @@ export class BusesComponent implements OnInit {
 
   updateBus() {
     if (this.editBusId === null) return;
-    this.http.put(`${environment.apiUrl}/buses/${this.editBusId}`, this.editBus).subscribe({
-      next: (response: any) => {
+    this.http.put(`${environment.apiUrl}/buses/${this.editBusId}`, this.editBus, { responseType: 'text' }).subscribe({
+      next: (response) => {
         this.successMessage = response || 'Bus updated successfully.';
-        this.fetchBuses();
+        this.fetchBuses(); // Refresh the list from API
         this.showEditModal = false;
         this.editBusId = null;
         this.editBus = { busNo: null, busType: null, totalSeats: 0 };
+        this.cdr.detectChanges();
         setTimeout(() => this.successMessage = null, 3000);
       },
       error: (err) => {
         this.errorMessage = err.error || 'Failed to update bus';
+        this.cdr.detectChanges();
         setTimeout(() => this.errorMessage = null, 3000);
       }
     });
@@ -101,7 +103,7 @@ export class BusesComponent implements OnInit {
     this.http.delete(`${environment.apiUrl}/buses/${id}`, { responseType: 'text' }).subscribe({
       next: (response) => {
         this.successMessage = response || 'Bus deleted successfully.';
-        this.fetchBuses();
+        this.fetchBuses(); // Refresh the list from API
         this.cdr.detectChanges();
         setTimeout(() => this.successMessage = null, 3000);
       },

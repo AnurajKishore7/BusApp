@@ -14,7 +14,7 @@ namespace BusApp.DTOs
 
         [Required]
         [RegularExpression(@"^\d{1,2}:\d{2}$", ErrorMessage = "Estimated duration must be in the format HH:mm.")]
-        public TimeSpan EstimatedDuration { get; set; }  // e.g., "16:30"
+        public string? EstimatedDuration { get; set; }  // e.g., "16:30"
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Distance must be a positive integer.")]
