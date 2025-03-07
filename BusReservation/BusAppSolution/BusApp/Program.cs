@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using BusApp.Converters;
 
 namespace BusApp
 {
@@ -18,6 +19,12 @@ namespace BusApp
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
             var environment = builder.Environment;
+
+            builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new TimeSpanConverter());
+    });
 
             // Add services to the container
             #region NewtonsoftJson

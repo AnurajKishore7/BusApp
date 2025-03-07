@@ -19,6 +19,8 @@ export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'signup-client', component: SignupClientComponent },
   { path: 'signup-operator', component: SignupOperatorComponent },
+  { path: 'trip-results', component: TripResultsComponent },
+  { path: 'trip-details/:id', component: TripResultsComponent },
   { 
     path: 'trip-search', 
     component: LandingComponent,

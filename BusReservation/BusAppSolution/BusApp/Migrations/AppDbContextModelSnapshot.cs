@@ -56,7 +56,7 @@ namespace BusApp.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("BusApp.Models.Bus", b =>
@@ -90,7 +90,7 @@ namespace BusApp.Migrations
 
                     b.HasIndex("OperatorId");
 
-                    b.ToTable("Buses");
+                    b.ToTable("Buses", (string)null);
                 });
 
             modelBuilder.Entity("BusApp.Models.BusRoute", b =>
@@ -122,7 +122,7 @@ namespace BusApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BusRoutes");
+                    b.ToTable("BusRoutes", (string)null);
                 });
 
             modelBuilder.Entity("BusApp.Models.BusSeat", b =>
@@ -149,7 +149,7 @@ namespace BusApp.Migrations
                     b.HasIndex("BusId", "SeatNumber")
                         .IsUnique();
 
-                    b.ToTable("BusSeats");
+                    b.ToTable("BusSeats", (string)null);
                 });
 
             modelBuilder.Entity("BusApp.Models.Client", b =>
@@ -189,7 +189,7 @@ namespace BusApp.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", (string)null);
 
                     b.HasData(
                         new
@@ -233,7 +233,7 @@ namespace BusApp.Migrations
                     b.HasIndex("BookingId")
                         .IsUnique();
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("BusApp.Models.TicketPassenger", b =>
@@ -276,7 +276,7 @@ namespace BusApp.Migrations
 
                     b.HasIndex("BookingId");
 
-                    b.ToTable("TicketPassengers");
+                    b.ToTable("TicketPassengers", (string)null);
                 });
 
             modelBuilder.Entity("BusApp.Models.TransportOperator", b =>
@@ -307,7 +307,7 @@ namespace BusApp.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("TransportOperators");
+                    b.ToTable("TransportOperators", (string)null);
 
                     b.HasData(
                         new
@@ -352,7 +352,7 @@ namespace BusApp.Migrations
 
                     b.HasIndex("BusRouteId");
 
-                    b.ToTable("Trips");
+                    b.ToTable("Trips", (string)null);
                 });
 
             modelBuilder.Entity("BusApp.Models.User", b =>
@@ -387,7 +387,7 @@ namespace BusApp.Migrations
 
                     b.HasKey("Email");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new

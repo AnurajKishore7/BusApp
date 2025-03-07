@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using BusApp.DTOs;
+using BusApp.Models;
 using BusApp.Services.Implementations;
 using BusApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -85,9 +86,12 @@ namespace BusApp.Controllers
                 var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
                 if (string.IsNullOrEmpty(userEmail))
                     return Unauthorized("User email not found.");
-                var newBooking = await _bookingService.AddBookingAsync(bookingDto, userEmail);
 
-                return CreatedAtAction(nameof(GetBookingById), new { bookingId = newBooking.Id }, newBooking);
+                var newBooking = await _bookingService.AddBookingAsync(bookingDto, userEmail);
+                if (newBooking == null)
+                    return BadRequest("Failed to create booking.");
+
+                return CreatedAtAction(nameof(GetBookingById), new { bookingId = newBooking.Id }, (object)newBooking); // Explicit cast to object
             }
             catch (Exception ex)
             {
@@ -155,9 +159,11 @@ namespace BusApp.Controllers
             try
             {
                 var tripDetails = await _bookingService.GetTripDetailsAsync(tripId, journeyDate);
-                if (tripDetails == null)
+                if (tripDetails is null)
                     return NotFound("Trip not found.");
-                return Ok(tripDetails);
+
+                TripSearchDetailsDto nonNullTripDetails = tripDetails; // Infer non-null type
+                return Ok(nonNullTripDetails);
             }
             catch (Exception ex)
             {

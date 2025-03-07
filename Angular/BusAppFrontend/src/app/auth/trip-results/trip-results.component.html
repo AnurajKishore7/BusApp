@@ -1,7 +1,134 @@
-<div class="min-h-screen bg-bus-white flex items-center justify-center p-4">
-    <div class="bg-bus-grey p-6 rounded-lg shadow-md w-full max-w-md text-center">
-      <h1 class="text-3xl font-bold text-bus-red mb-4">Trip Results</h1>
-      <p class="text-gray-700">Showing results for {{ source }} to {{ destination }} on {{ journeyDate }}</p>
-      <p class="text-gray-700">Results page coming soon!</p>
+<div class="min-h-screen bg-bus-white flex flex-col">
+  <!-- Header -->
+  <div class="bg-gray-100 p-4">
+    <div class="text-sm text-gray-500">Bus Ticket > {{ source }} To {{ destination }} Bus</div>
+    <div class="text-2xl font-bold text-gray-900">{{ source }} to {{ destination }} Bus</div>
+    <div class="flex items-center space-x-2 text-gray-700">
+      <span>{{ source }} → {{ destination }}</span>
+      <span>|</span>
+      <span>{{ journeyDate | date: 'dd MMM' }}</span>
+      <span>|</span>
+      <span>{{ journeyDate | date: 'EEE' }}</span>
+      <button (click)="modifySearch()" class="text-bus-red hover:underline">Modify</button>
     </div>
   </div>
+
+  <div class="flex flex-1">
+    <!-- Filters Sidebar -->
+    <div class="w-64 p-4 bg-gray-50 border-r">
+      <h2 class="text-lg font-bold mb-4">FILTERS</h2>
+
+      <!-- Price Range -->
+      <div class="mb-4">
+        <h3 class="text-sm font-semibold mb-2">Price Range</h3>
+        <input
+          type="range"
+          [(ngModel)]="priceMin"
+          [min]="50"
+          [max]="priceMax"
+          (input)="onPriceChange()"
+          class="w-full"
+        />
+        <input
+          type="range"
+          [(ngModel)]="priceMax"
+          [min]="priceMin"
+          [max]="4799"
+          (input)="onPriceChange()"
+          class="w-full"
+        />
+        <div class="flex justify-between text-sm text-gray-600">
+          <span>₹{{ priceMin }}</span>
+          <span>₹{{ priceMax }}</span>
+        </div>
+      </div>
+
+      <!-- Bus Type -->
+      <div class="mb-4">
+        <h3 class="text-sm font-semibold mb-2">Bus Type</h3>
+        <div *ngFor="let type of busTypeOptions" class="flex items-center mb-1">
+          <input
+            type="checkbox"
+            [id]="type"
+            (change)="onBusTypeChange(type, $event)"
+            class="mr-2"
+          />
+          <label [for]="type" class="text-sm text-gray-700">{{ type }}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+      <!-- Loading State -->
+      <div *ngIf="loading" class="text-center p-4 text-gray-700">
+        Loading...
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="error && !loading" class="text-center p-4 text-red-500">
+        {{ error }}
+      </div>
+
+      <!-- Buses Found and Sort Options -->
+      <div class="flex justify-between items-center mb-4" *ngIf="!loading && !error">
+        <div class="text-gray-700">{{ filteredTrips.length }} Buses found</div>
+        <div class="flex space-x-2">
+          <button (click)="onSortChange('fare')" [class.text-bus-red]="sortBy === 'fare'">Fare</button>
+          <button (click)="onSortChange('seatsAvailable')" [class.text-bus-red]="sortBy === 'seatsAvailable'">Seats Available</button>
+        </div>
+      </div>
+
+      <!-- Bus Listings -->
+      <div *ngIf="!loading && !error">
+        <div *ngFor="let trip of filteredTrips" class="border rounded-lg p-4 mb-4 bg-bus-white shadow-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="flex items-center space-x-2">
+                <!-- Custom Placeholder Logo (64x64px) -->
+                <div class="w-16 h-16 bg-gray-400 rounded-lg flex items-center justify-center">
+                  <span class="text-white text-xl">🚍</span>
+                </div>
+                <div class="text-lg font-bold text-gray-900">{{ trip.operatorName }} ({{ trip.busNo }})</div>
+              </div>
+              <div class="text-sm text-gray-600">{{ trip.busType }}</div>
+              <div class="flex space-x-2 text-sm text-gray-600 mt-1">
+                <span>{{ trip.departure.toString() }} {{ trip.departureLocation }}</span>
+                <span>→</span>
+                <span>{{ calculateDuration(trip.departure, trip.arrival) }}</span>
+                <span>→</span>
+                <span>{{ trip.arrival.toString() }} {{ trip.arrivalLocation }}</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="text-lg font-bold text-gray-900">₹{{ trip.startingFare }}</div>
+              <div class="text-sm text-gray-600">{{ trip.seatsAvailable }}/{{ trip.totalSeats }} Seats available</div>
+              <div class="text-sm text-green-600">★ 4.5</div> <!-- Hardcoded rating -->
+            </div>
+          </div>
+          <div class="flex justify-between items-center mt-2">
+            <div class="text-sm text-gray-600">
+              <!-- Hardcoded amenities -->
+              Live Tracking
+            </div>
+            <button
+              (click)="viewSeats(trip.tripId)"
+              class="bg-bus-red text-bus-white px-4 py-2 rounded-lg hover:bg-red-700"
+            >
+              View Seats
+            </button>
+          </div>
+          <div class="text-sm text-gray-600 mt-1">
+            <!-- Hardcoded reward -->
+            Take 4 trips get a free ticket
+          </div>
+        </div>
+      </div>
+
+      <!-- No Trips Message -->
+      <div *ngIf="!loading && !error && filteredTrips.length === 0" class="text-center p-4 text-gray-700">
+        No trips found for the selected criteria.
+      </div>
+    </div>
+  </div>
+</div>

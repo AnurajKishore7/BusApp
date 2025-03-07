@@ -1,4 +1,5 @@
 ﻿using BusApp.DTOs;
+using BusApp.Models;
 
 namespace BusApp.Services.Interfaces
 {

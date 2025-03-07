@@ -59,13 +59,17 @@ namespace BusApp.Repositories.Implementations
         {
             try
             {
-                return await _context.Trips
+                Console.WriteLine($"Fetching trips for Source: {source}, Destination: {destination}");
+                var trips = await _context.Trips
                     .Include(t => t.BusRoute)
                     .Where(t => t.BusRoute != null &&
-                                t.BusRoute.Source == source &&
-                                t.BusRoute.Destination == destination &&
+                                t.BusRoute.Source != null && t.BusRoute.Destination != null &&
+                                t.BusRoute.Source.ToLower() == source.ToLower() &&
+                                t.BusRoute.Destination.ToLower() == destination.ToLower() &&
                                 !t.IsDeleted)
                     .ToListAsync();
+                Console.WriteLine($"Found {trips.Count} trips for Source: {source}, Destination: {destination}");
+                return trips;
             }
             catch (Exception ex)
             {

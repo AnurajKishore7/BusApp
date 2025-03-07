@@ -299,34 +299,26 @@ namespace BusApp.Services.Implementations
         {
             try
             {
-                // Get trips by source and destination
                 var trips = await _tripRepo.GetTripsBySourceAndDestinationAsync(source, destination);
                 var tripDetailsList = new List<TripSearchDetailsDto>();
 
                 foreach (var trip in trips)
                 {
-                    // Get bus details
                     var bus = await _busRepo.GetBusByIdAsync(trip.BusId);
-                    if (bus == null) continue;
-
-                    // Get operator name
-                    var operatorEntity = await _operatorRepo.GetOperatorByIdAsync(bus.OperatorId);
-                    if (operatorEntity == null) continue;
-
-                    // Get available seats
+                    var operatorEntity = bus != null ? await _operatorRepo.GetOperatorByIdAsync(bus.OperatorId) : null;
                     int availableSeats = await GetAvailableSeatsAsync(trip.Id, journeyDate);
 
                     tripDetailsList.Add(new TripSearchDetailsDto
                     {
                         TripId = trip.Id,
-                        OperatorName = operatorEntity.Name,
-                        BusNo = bus.BusNo,
+                        OperatorName = operatorEntity?.Name ?? "Unknown Operator",
+                        BusNo = bus?.BusNo ?? "Unknown Bus",
                         Departure = trip.DepartureTime,
                         Arrival = trip.ArrivalTime,
                         PricePerSeat = trip.Price,
                         SeatsAvailable = availableSeats,
-                        TotalSeats = bus.TotalSeats,
-                        BusType = bus.BusType
+                        TotalSeats = bus?.TotalSeats ?? 0,
+                        BusType = bus?.BusType ?? "Unknown Type"
                     });
                 }
 
@@ -347,24 +339,20 @@ namespace BusApp.Services.Implementations
                 if (trip == null) return null;
 
                 var bus = await _busRepo.GetBusByIdAsync(trip.BusId);
-                if (bus == null) return null;
-
-                var operatorEntity = await _operatorRepo.GetOperatorByIdAsync(bus.OperatorId);
-                if (operatorEntity == null) return null;
-
+                var operatorEntity = bus != null ? await _operatorRepo.GetOperatorByIdAsync(bus.OperatorId) : null;
                 int availableSeats = await GetAvailableSeatsAsync(tripId, journeyDate);
 
                 return new TripSearchDetailsDto
                 {
                     TripId = trip.Id,
-                    OperatorName = operatorEntity.Name,
-                    BusNo = bus.BusNo,
+                    OperatorName = operatorEntity?.Name ?? "Unknown Operator",
+                    BusNo = bus?.BusNo ?? "Unknown Bus",
                     Departure = trip.DepartureTime,
                     Arrival = trip.ArrivalTime,
                     PricePerSeat = trip.Price,
                     SeatsAvailable = availableSeats,
-                    TotalSeats = bus.TotalSeats,
-                    BusType = bus.BusType
+                    TotalSeats = bus?.TotalSeats ?? 0,
+                    BusType = bus?.BusType ?? "Unknown Type"
                 };
             }
             catch (Exception ex)
