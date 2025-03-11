@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../auth/auth.service';
-import { FormsModule } from '@angular/forms'; // For ngModel
+import { FormsModule } from '@angular/forms';
 import { PendingOperator } from '../../core/models/pending-operator.dto';
 import { ApproveResponse } from '../../core/models/approve-response.dto';
 import { environment } from '../../../environments/environment.development';
@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment.development';
 @Component({
   selector: 'app-transport-operators',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Add FormsModule
+  imports: [CommonModule, FormsModule],
   templateUrl: './transport-operators.component.html',
   styleUrls: ['./transport-operators.component.css']
 })

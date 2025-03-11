@@ -151,7 +151,7 @@ namespace BusApp.Services.Implementations
         {
             try
             {
-                // Extract email from JWT token
+                // Extracting email from JWT token
                 var email = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
                 if (string.IsNullOrEmpty(email))
                 {
@@ -159,7 +159,7 @@ namespace BusApp.Services.Implementations
                     return false;
                 }
 
-                // Call repository method to delete the transport operator
+                // Calling repository method to delete the transport operator
                 return await _operatorRepo.DeleteOperatorAsync(email);
             }
             catch (Exception ex)

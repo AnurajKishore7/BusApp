@@ -60,12 +60,18 @@ namespace BusApp.Repositories.Implementations
             try
             {
                 await _context.TicketPassengers.AddRangeAsync(passengers);
-                await _context.SaveChangesAsync();
+                int savedCount = await _context.SaveChangesAsync();
+                Console.WriteLine($"Successfully saved {savedCount} ticket passengers to the database.");
                 return passengers;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in AddPassengersAsync (Repo): {ex.Message}");
+                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                }
                 return new List<TicketPassenger>();
             }
         }

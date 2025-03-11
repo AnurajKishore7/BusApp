@@ -168,5 +168,30 @@ namespace BusApp.Repositories.Implementations
                 return 0;
             }
         }
+
+        public async Task<List<string>> GetBookedSeatNumbersAsync(int tripId, DateTime journeyDate)
+        {
+            try
+            {
+                // Get all bookings for the trip and date with status "Confirmed"
+                var bookings = await _context.Bookings
+                    .Where(b => b.TripId == tripId && b.JourneyDate == journeyDate && b.Status == "Confirmed")
+                    .Select(b => b.Id)
+                    .ToListAsync();
+
+                // Get all seat numbers from TicketPassengers for these bookings
+                var bookedSeatNumbers = await _context.TicketPassengers
+                    .Where(tp => bookings.Contains(tp.BookingId))
+                    .Select(tp => tp.SeatNumber)
+                    .ToListAsync();
+
+                return bookedSeatNumbers;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetBookedSeatNumbersAsync for TripId {tripId} on {journeyDate}: {ex.Message}");
+                return new List<string>();
+            }
+        }
     }
 }

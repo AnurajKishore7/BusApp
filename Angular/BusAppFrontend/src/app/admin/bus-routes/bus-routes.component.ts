@@ -51,7 +51,6 @@ export class BusRoutesComponent implements OnInit {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
     this.cdr.detectChanges();
-    console.log('Sending new bus route:', this.newBusRoute); // Debug
     this.http.post<BusRoute>(`${environment.apiUrl}/busRoutes`, this.newBusRoute).subscribe({
       next: (response) => {
         this.successMessage = 'Bus route added successfully.';

@@ -6,9 +6,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'bus-red': '#E63946',  // Primary red
-        'bus-white': '#FFFFFF', // Base white
-        'bus-grey': '#F1F1F1',  // Neutral grey
+        'bus-red': '#E63946',  
+        'bus-white': '#FFFFFF', 
+        'bus-grey': '#F1F1F1',
       },
     },
   },

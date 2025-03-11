@@ -7,20 +7,17 @@
         public int TripId { get; set; }
         public DateTime JourneyDate { get; set; }
         public int TicketCount { get; set; }
-        public string Status { get; set; }
-
-        // Details from TicketPassengers
+        public string Status { get; set; } = "Pending";
+        public string Contact { get; set; } = "";
         public List<TicketPassengerResponseDto> TicketPassengers { get; set; } = new List<TicketPassengerResponseDto>();
-
-        // Additional properties
-        public string ClientName { get; set; } = "";    // Fetched from Client table
-        public string Source { get; set; } = "";    // Fetched from Trip table
+        public string ClientName { get; set; } = "";
+        public string Source { get; set; } = "";
         public string Destination { get; set; } = "";
-
-        // Payment Details
-        public decimal? TotalAmount { get; set; }
-        public string? PaymentMethod { get; set; }
-        public string? PaymentStatus { get; set; }
+        public decimal BaseFare { get; set; }
+        public decimal GST { get; set; }
+        public decimal ConvenienceFee { get; set; }
+        public decimal TotalAmount { get; set; }
+        public string PaymentMethod { get; set; } = "";
+        public string PaymentStatus { get; set; } = "";
     }
-
 }

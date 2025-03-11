@@ -8,10 +8,14 @@ namespace BusApp.Services.Implementations
     public class TripsService : ITripsService
     {
         private readonly ITripsRepo _tripsRepo;
+        private readonly IBookingRepo _bookingRepo;
+        private readonly IBusRoutesRepo _busRoutesRepo;
 
-        public TripsService(ITripsRepo tripsRepo)
+        public TripsService(ITripsRepo tripsRepo, IBookingRepo bookingRepo, IBusRoutesRepo busRoutesRepo)
         {
             _tripsRepo = tripsRepo;
+            _bookingRepo = bookingRepo;
+            _busRoutesRepo = busRoutesRepo;
         }
 
         public async Task<IEnumerable<TripResponseDto>> GetAllTripsAsync()
@@ -186,7 +190,6 @@ namespace BusApp.Services.Implementations
                     throw new KeyNotFoundException($"Trip with ID {id} not found.");
                 }
 
-                // Update the trip properties
                 existingTrip.BusRouteId = dto.BusRouteId;
                 existingTrip.BusId = dto.BusId;
                 existingTrip.DepartureTime = dto.DepartureTime;
@@ -243,5 +246,55 @@ namespace BusApp.Services.Implementations
                 return false;
             }
         }
+
+        public async Task<TripDetailsResponseDto?> GetTripDetailsAsync(int id, DateTime journeyDate)
+        {
+            try
+            {
+                // Fetch the trip
+                var trip = await _tripsRepo.GetTripByIdAsync(id);
+                if (trip == null) return null;
+
+                // Fetch the associated BusRoute for Source and Destination
+                var busRoute = await _busRoutesRepo.GetBusRouteByIdAsync(trip.BusRouteId);
+                if (busRoute == null) throw new Exception("Bus route not found.");
+
+                // Calculate available seats based on bookings for the journey date
+                var bookedSeats = await _bookingRepo.GetBookedSeatNumbersAsync(id, journeyDate);
+                var allSeats = GenerateAllSeats();
+                var availableSeats = allSeats.Except(bookedSeats).ToArray();
+
+                return new TripDetailsResponseDto
+                {
+                    Id = trip.Id,
+                    BusRouteId = trip.BusRouteId,
+                    BusId = trip.BusId,
+                    DepartureTime = trip.DepartureTime,
+                    ArrivalTime = trip.ArrivalTime,
+                    Price = trip.Price,
+                    Source = busRoute.Source,
+                    Destination = busRoute.Destination,
+                    JourneyDate = journeyDate,
+                    AvailableSeats = availableSeats
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetTripDetailsAsync (Service): {ex.Message}");
+                return null;
+            }
+        }
+
+        private List<string> GenerateAllSeats()
+        {
+            var allSeats = new List<string>();
+            for (int i = 1; i <= 20; i++)
+            {
+                allSeats.Add($"A{i}");
+                allSeats.Add($"B{i}");
+            }
+            return allSeats;
+        }
+
     }
 }

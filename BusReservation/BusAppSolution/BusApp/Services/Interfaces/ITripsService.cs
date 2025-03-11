@@ -11,5 +11,6 @@ namespace BusApp.Services.Interfaces
         Task<TripResponseDto?> AddTripAsync(TripDto dto);
         Task<TripResponseDto?> UpdateTripAsync(int id, TripDto dto);
         Task<bool> DeleteTripAsync(int id);
+        Task<TripDetailsResponseDto?> GetTripDetailsAsync(int id, DateTime journeyDate);
     }
 }

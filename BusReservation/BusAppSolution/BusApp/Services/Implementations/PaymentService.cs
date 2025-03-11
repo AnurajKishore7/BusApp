@@ -1,8 +1,6 @@
 ﻿using BusApp.DTOs;
-using BusApp.Models;
 using BusApp.Repositories.Interfaces;
 using BusApp.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusApp.Services.Implementations
 {

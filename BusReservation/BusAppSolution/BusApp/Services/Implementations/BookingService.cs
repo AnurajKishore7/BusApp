@@ -50,6 +50,7 @@ namespace BusApp.Services.Implementations
                     TripId = booking.TripId,
                     JourneyDate = booking.JourneyDate,
                     TicketCount = booking.TicketCount,
+                    Contact = booking.Contact,
                     Status = booking.Status,
                     ClientName = booking.Client?.Name ?? "Unknown",
                     Source = booking.Trip.BusRoute.Source,
@@ -62,7 +63,6 @@ namespace BusApp.Services.Implementations
                         Id = p.Id,
                         BookingId = p.BookingId,
                         PassengerName = p.Name,
-                        Contact = p.Contact,
                         IsHandicapped = p.IsHandicapped
                     }).ToList()
                 }).ToList();
@@ -91,6 +91,7 @@ namespace BusApp.Services.Implementations
                     JourneyDate = booking.JourneyDate,
                     TicketCount = booking.TicketCount,
                     Status = booking.Status,
+                    Contact = booking.Contact,
                     ClientName = booking.Client?.Name ?? "Unknown",
                     Source = booking.Trip.BusRoute.Source,
                     Destination = booking.Trip.BusRoute.Destination,
@@ -102,7 +103,9 @@ namespace BusApp.Services.Implementations
                         Id = p.Id,
                         BookingId = p.BookingId,
                         PassengerName = p.Name,
-                        Contact = p.Contact,
+                        Age = p.Age,
+                        Gender = p.Gender,
+                        SeatNumber = p.SeatNumber,
                         IsHandicapped = p.IsHandicapped
                     }).ToList()
                 };
@@ -127,12 +130,12 @@ namespace BusApp.Services.Implementations
                     JourneyDate = b.JourneyDate,
                     TicketCount = b.TicketCount,
                     Status = b.Status,
+                    Contact = b.Contact,
                     TicketPassengers = b.TicketPassengers?.Select(tp => new TicketPassengerResponseDto
                     {
                         Id = tp.Id,
                         BookingId = tp.BookingId,
                         PassengerName = tp.Name,
-                        Contact = tp.Contact,
                         IsHandicapped = tp.IsHandicapped
                     }).ToList() ?? new List<TicketPassengerResponseDto>(),
                     ClientName = b.Client?.Name ?? "",
@@ -169,11 +172,36 @@ namespace BusApp.Services.Implementations
 
                 // 2. Check seat availability
                 int totalSeats = await _busRepo.GetTotalSeatsByBusIdAsync(trip.BusId);
-                int bookedSeats = await _bookingRepo.GetBookedSeatsByTripIdAsync(bookingDto.TripId, bookingDto.JourneyDate);
-
-                if (bookedSeats + bookingDto.TicketCount > totalSeats)
+                if (totalSeats != 40)
                 {
-                    throw new Exception("Not enough seats available.");
+                    throw new Exception("Expected 40 seats for the bus.");
+                }
+
+                // Get currently booked seat numbers
+                var bookedSeatNumbers = await _bookingRepo.GetBookedSeatNumbersAsync(bookingDto.TripId, bookingDto.JourneyDate);
+
+                // Extract selected seat numbers from TicketPassengers
+                var selectedSeatNumbers = bookingDto.TicketPassengers.Select(tp => tp.SeatNumber).ToList();
+                if (selectedSeatNumbers.Count != bookingDto.TicketCount)
+                {
+                    throw new Exception("Number of selected seats must match TicketCount.");
+                }
+
+                // Validate that selected seats are not already booked
+                var duplicateSeats = selectedSeatNumbers.Intersect(bookedSeatNumbers).ToList();
+                if (duplicateSeats.Any())
+                {
+                    throw new Exception($"The following seats are already booked: {string.Join(", ", duplicateSeats)}");
+                }
+
+                // Validate that all selected seat numbers are valid (A1-A20, B1-B20)
+                var validSeatNumbers = new List<string>();
+                for (int i = 1; i <= 20; i++) validSeatNumbers.Add($"A{i}");
+                for (int i = 1; i <= 20; i++) validSeatNumbers.Add($"B{i}");
+                var invalidSeats = selectedSeatNumbers.Except(validSeatNumbers).ToList();
+                if (invalidSeats.Any())
+                {
+                    throw new Exception($"Invalid seat numbers: {string.Join(", ", invalidSeats)}");
                 }
 
                 // 3. Fetch Client ID from User Email
@@ -190,24 +218,37 @@ namespace BusApp.Services.Implementations
                     TripId = bookingDto.TripId,
                     JourneyDate = bookingDto.JourneyDate,
                     TicketCount = bookingDto.TicketCount,
-                    Status = "Pending" // Set to "Pending" until payment is confirmed
+                    Contact = bookingDto.Contact,
+                    Status = "Pending"
                 };
 
                 var addedBooking = await _bookingRepo.AddBookingAsync(newBooking);
 
-                // 5. Add TicketPassengers
+                // 5. Add TicketPassengers with SeatNumbers
                 var passengers = bookingDto.TicketPassengers.Select(p => new TicketPassenger
                 {
                     BookingId = addedBooking.Id,
                     Name = p.PassengerName,
-                    Contact = p.Contact,
-                    IsHandicapped = p.IsHandicapped
+                    Age = p.Age,
+                    Gender = p.Gender,
+                    IsHandicapped = p.IsHandicapped,
+                    SeatNumber = p.SeatNumber
                 }).ToList();
 
                 await _ticketPassengerRepo.AddPassengersAsync(passengers);
 
-                // 6. Calculate Total Amount
-                decimal totalAmount = trip.Price * bookingDto.TicketCount;
+                // Reload the saved passengers from the database
+                var savedPassengers = await _ticketPassengerRepo.GetByBookingIdAsync(addedBooking.Id);
+                if (!savedPassengers.Any())
+                {
+                    throw new Exception("Failed to save ticket passengers.");
+                }
+
+                // 6. Calculate Total Amount with Breakdown
+                decimal baseFare = trip.Price * bookingDto.TicketCount;
+                decimal gst = baseFare * 0.06m;
+                decimal convenienceFee = 10m;
+                decimal totalAmount = baseFare + gst + convenienceFee;
 
                 // 7. Create a Payment entry with "Pending" status
                 var payment = new Payment
@@ -215,12 +256,11 @@ namespace BusApp.Services.Implementations
                     BookingId = addedBooking.Id,
                     TotalAmount = totalAmount,
                     PaymentMethod = "Online",
-                    Status = "Pending" // Will be updated when payment is confirmed
+                    Status = "Pending"
                 };
 
                 var addedPayment = await _paymentRepo.AddPaymentAsync(payment);
 
-                // 8. Prepare Response
                 var response = new BookingResponseDto
                 {
                     Id = addedBooking.Id,
@@ -228,19 +268,25 @@ namespace BusApp.Services.Implementations
                     TripId = bookingDto.TripId,
                     JourneyDate = bookingDto.JourneyDate,
                     TicketCount = bookingDto.TicketCount,
-                    Status = addedBooking.Status, // "Pending"
+                    Status = addedBooking.Status,
+                    Contact = addedBooking.Contact,
                     ClientName = client.Name,
                     Source = busRoute.Source,
                     Destination = busRoute.Destination,
+                    BaseFare = baseFare,
+                    GST = gst,
+                    ConvenienceFee = convenienceFee,
                     TotalAmount = totalAmount,
                     PaymentMethod = payment.PaymentMethod,
-                    PaymentStatus = payment.Status, // "Pending"
-                    TicketPassengers = passengers.Select(p => new TicketPassengerResponseDto
+                    PaymentStatus = payment.Status,
+                    TicketPassengers = savedPassengers.Select(p => new TicketPassengerResponseDto
                     {
                         Id = p.Id,
                         BookingId = p.BookingId,
                         PassengerName = p.Name,
-                        Contact = p.Contact,
+                        Age = p.Age,
+                        Gender = p.Gender,
+                        SeatNumber = p.SeatNumber,
                         IsHandicapped = p.IsHandicapped
                     }).ToList()
                 };
@@ -361,6 +407,57 @@ namespace BusApp.Services.Implementations
                 return null;
             }
         }
-    }
 
+        public async Task<SeatLayoutDto> GetSeatLayoutAsync(int tripId, DateTime journeyDate)
+        {
+            try
+            {
+                var trip = await _tripRepo.GetTripByIdAsync(tripId);
+                if (trip == null)
+                {
+                    throw new Exception("Trip not found.");
+                }
+
+                // Get total seats for the bus
+                int totalSeats = await _busRepo.GetTotalSeatsByBusIdAsync(trip.BusId);
+                if (totalSeats != 40)
+                {
+                    throw new Exception("Expected 40 seats for the bus.");
+                }
+
+                // Generate seat numbers (A1-A20, B1-B20)
+                var seatNumbers = new List<string>();
+                for (int i = 1; i <= 20; i++)
+                {
+                    seatNumbers.Add($"A{i}");
+                }
+                for (int i = 1; i <= 20; i++)
+                {
+                    seatNumbers.Add($"B{i}");
+                }
+
+                // Get booked seat numbers
+                var bookedSeatNumbers = await _bookingRepo.GetBookedSeatNumbersAsync(tripId, journeyDate);
+
+                var seats = seatNumbers.Select(seatNumber => new SeatDto
+                {
+                    SeatNumber = seatNumber,
+                    IsBooked = bookedSeatNumbers.Contains(seatNumber)
+                }).ToList();
+
+                return new SeatLayoutDto
+                {
+                    TripId = tripId,
+                    JourneyDate = journeyDate,
+                    TotalSeats = totalSeats,
+                    Seats = seats
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetSeatLayoutAsync for TripId {tripId} on {journeyDate}: {ex.Message}");
+                throw;
+            }
+        }
+    }
 }

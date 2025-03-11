@@ -2,7 +2,7 @@
 
 namespace BusApp.DTOs
 {
-    public class BookingDto
+    public class BookingWithPassengerDetailsDto
     {
         [Required(ErrorMessage = "TripId is required.")]
         public int TripId { get; set; }
@@ -17,7 +17,7 @@ namespace BusApp.DTOs
         [RegularExpression(@"^(\+91\d{10})$|^(\d{10})$", ErrorMessage = "Invalid Indian mobile number (10 digits, or 10 digits with +91)")]
         public string Contact { get; set; }
 
-        [Required(ErrorMessage = "TicketPassenger is required.")]
-        public List<TicketPassengerDto> TicketPassengers { get; set; } = new List<TicketPassengerDto>();
+        [Required(ErrorMessage = "TicketPassengers are required.")]
+        public List<TicketPassengerWithDetailsDto> TicketPassengers { get; set; } = new List<TicketPassengerWithDetailsDto>();
     }
 }

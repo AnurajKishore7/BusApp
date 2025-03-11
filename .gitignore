@@ -2,32 +2,73 @@
 .git/
 .github/
 
-# Ignore .vs folder inside BusAppSolution
-BusAppSolution/.vs/
+# Ignore Visual Studio and VS Code user settings
+.vscode/
+.vs/
+BusReservation/BusAppSolution/.vs/
 
-# Ignore bin and obj folders in any subdirectory
+# Ignore bin and obj folders in any subdirectory (for .NET)
 **/bin/
 **/obj/
+**/packages/
+**/TestResults/
+**/publish/
+**/out/
+
+# Ignore Visual Studio files
+BusReservation/BusAppSolution/*.user
+BusReservation/BusAppSolution/*.suo
+BusReservation/BusAppSolution/*.cache
+BusReservation/BusAppSolution/*.ldb
+BusReservation/BusAppSolution/*.pdb
 
 # Ignore node_modules for Angular frontend
 Angular/BusAppFrontend/node_modules/
 
-# Ignore Angular build outputs
+# Ignore Angular build and cache outputs
 Angular/BusAppFrontend/dist/
+Angular/BusAppFrontend/tmp/
+Angular/BusAppFrontend/out-tsc/
+Angular/BusAppFrontend/bazel-out/
 Angular/BusAppFrontend/.angular/
+Angular/BusAppFrontend/.idea/
+Angular/BusAppFrontend/.eslintcache
+Angular/BusAppFrontend/.firebase/
+Angular/BusAppFrontend/.turbo/
 
-# Ignore environment files (use environment.example.ts instead)
+# Ignore Angular test coverage and logs
+Angular/BusAppFrontend/coverage/
+Angular/BusAppFrontend/libpeerconnection.log
+Angular/BusAppFrontend/testem.log
+
+# Ignore Angular environment files (use environment.example.ts instead)
 Angular/BusAppFrontend/src/environments/environment.ts
 Angular/BusAppFrontend/src/environments/environment.prod.ts
-
-# Ignore Visual Studio & VS Code user settings
-.vscode/
-.vs/
-Angular/BusAppFrontend/.vscode/
+Angular/BusAppFrontend/src/environments/*.local.ts
 
 # Ignore logs
 **/*.log
+Angular/BusAppFrontend/npm-debug.log*
+Angular/BusAppFrontend/yarn-error.log
 
 # Ignore OS-specific files
 Thumbs.db
 .DS_Store
+
+# Ignore backup and temporary files
+*.bak
+*.tmp
+
+# Ignore sensitive configuration files
+BusReservation/appsettings*.json
+
+# Ignore Angular-specific IDE/editor files
+Angular/BusAppFrontend/.history/
+Angular/BusAppFrontend/.sass-cache/
+Angular/BusAppFrontend/connect.lock
+Angular/BusAppFrontend/.c9/
+Angular/BusAppFrontend/.project
+Angular/BusAppFrontend/.classpath
+Angular/BusAppFrontend/*.launch
+Angular/BusAppFrontend/.settings/
+Angular/BusAppFrontend/*.sublime-workspace

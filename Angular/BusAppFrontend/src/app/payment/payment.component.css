@@ -1,0 +1,17 @@
+/* payment.component.css */
+.bg-green-100 {
+    background-color: #e6ffe6; 
+    border-radius: 8px;
+  }
+  
+  .text-green-800 {
+    color: #006400; 
+  }
+  
+  .shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .rounded-lg {
+    border-radius: 8px; 
+  }

@@ -80,16 +80,20 @@ namespace BusApp.Controllers
                 var booking = await _bookingService.GetByIdAsync(payment.BookingId);
                 if (booking == null) return BadRequest("Associated booking not found.");
 
-                // Calculate total amount
-                decimal ticketPrice = booking.TotalAmount ?? 0;
-                decimal gst = ticketPrice * 0.06m; 
-                decimal convenienceFee = 10m; 
-                decimal newTotalAmount = ticketPrice + gst + convenienceFee;
-
-                var success = await _paymentService.UpdatePaymentStatusAsync(paymentId, "Completed", newTotalAmount);
+                decimal ticketPrice = booking.TotalAmount;
+                var success = await _paymentService.UpdatePaymentStatusAsync(paymentId, "Completed", ticketPrice);
                 if (!success) return BadRequest("Failed to confirm payment.");
 
-                return Ok("Payment confirmed and booking marked as confirmed.");
+                var response = new PaymentResponseDto
+                {
+                    Id = payment.Id,
+                    BookingId = payment.BookingId,
+                    TotalAmount = payment.TotalAmount,
+                    PaymentMethod = payment.PaymentMethod,
+                    Status = "Completed"
+                };
+
+                return Ok(response);
             }
             catch (Exception ex)
             {

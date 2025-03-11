@@ -103,7 +103,7 @@ export class BusesComponent implements OnInit {
     this.http.delete(`${environment.apiUrl}/buses/${id}`, { responseType: 'text' }).subscribe({
       next: (response) => {
         this.successMessage = response || 'Bus deleted successfully.';
-        this.fetchBuses(); // Refresh the list from API
+        this.fetchBuses();
         this.cdr.detectChanges();
         setTimeout(() => this.successMessage = null, 3000);
       },

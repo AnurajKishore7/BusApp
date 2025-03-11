@@ -25,6 +25,11 @@ namespace BusApp.Models
         [Required(ErrorMessage = "Status is required.")]
         [StringLength(20, ErrorMessage = "Status cannot exceed 20 characters.")]
         public string Status { get; set; } = "Pending"; // Pending | Confirmed | Cancelled
+
+        [Required(ErrorMessage = "Contact number is required")]
+        [RegularExpression(@"^(\+91\d{10})$|^(\d{10})$", ErrorMessage = "Invalid Indian mobile number (10 digits, or 10 digits with +91)")]
+        public string Contact { get; set; } = "";
+
         [Required]
         [Column(TypeName = "datetime")]
         public DateTime BookedOn { get; set; } = DateTime.Now;
@@ -36,5 +41,4 @@ namespace BusApp.Models
         public ICollection<TicketPassenger> TicketPassengers { get; set; } = new List<TicketPassenger>();
         public Payment? Payment { get; set; }
     }
-
 }

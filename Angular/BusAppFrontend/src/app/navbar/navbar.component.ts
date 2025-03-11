@@ -15,6 +15,7 @@ import { PopupService } from '../auth/popup.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent {
   showPopup = false;
   isLoggedIn = false;
@@ -60,14 +61,13 @@ export class NavbarComponent {
         this.errorMessage = null;
   
         const role = response.role;
+        this.popupService.notifyLoginSuccess();
+
+        // Only redirect for non-clients
         if (role === 'TransportOperator') {
           this.router.navigate(['/operator-dashboard']);
         } else if (role === 'Admin') {
           this.router.navigate(['/admin-dashboard']);
-        } else if (role === 'Client') {
-          this.router.navigate(['/trip-search']);
-        } else {
-          this.router.navigate(['/']); 
         }
       },
       error: (err) => {

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace BusApp.DTOs
+﻿namespace BusApp.DTOs
 {
     public class BusDto
     {

@@ -1,6 +1,5 @@
 ﻿using BusApp.DTOs;
 using BusApp.Models;
-using BusApp.Repositories.Implementations;
 using BusApp.Repositories.Interfaces;
 using BusApp.Services.Interfaces;
 
@@ -26,7 +25,6 @@ namespace BusApp.Services.Implementations
                     Id = p.Id,
                     BookingId = p.BookingId,
                     PassengerName = p.Name,
-                    Contact = p.Contact,
                     IsHandicapped = p.IsHandicapped
                 }).ToList();
             }
@@ -50,7 +48,6 @@ namespace BusApp.Services.Implementations
                     Id = passenger.Id,
                     BookingId = passenger.BookingId,
                     PassengerName = passenger.Name,
-                    Contact = passenger.Contact,
                     IsHandicapped = passenger.IsHandicapped
                 };
             }
@@ -72,7 +69,6 @@ namespace BusApp.Services.Implementations
                     Id = p.Id,
                     BookingId = p.BookingId,
                     PassengerName = p.Name,
-                    Contact = p.Contact,
                     IsHandicapped = p.IsHandicapped
                 }).ToList();
             }
@@ -87,24 +83,20 @@ namespace BusApp.Services.Implementations
         {
             try
             {
-                // Convert DTOs to TicketPassenger entities
                 var passengers = passengerDtos.Select(dto => new TicketPassenger
                 {
                     BookingId = bookingId,
                     Name = dto.PassengerName,
-                    Contact = dto.Contact,
                     IsHandicapped = dto.IsHandicapped
                 }).ToList();
 
                 var addedPassengers = await _repo.AddPassengersAsync(passengers);
 
-                // Convert saved entities to response DTOs
                 return addedPassengers.Select(p => new TicketPassengerResponseDto
                 {
                     Id = p.Id,
                     BookingId = p.BookingId,
                     PassengerName = p.Name,
-                    Contact = p.Contact,
                     IsHandicapped = p.IsHandicapped
                 }).ToList();
             }

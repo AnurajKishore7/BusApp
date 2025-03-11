@@ -171,7 +171,7 @@ namespace BusApp.Services.Implementations
                     return false;
                 }
 
-                // Call repository method to delete the client
+                // Calling repository method to delete the client
                 return await _clientRepo.DeleteClientAsync(email);
             }
             catch (Exception ex)

@@ -3,7 +3,6 @@ using BusApp.Models;
 using BusApp.Repositories.Interfaces;
 using BusApp.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -60,7 +59,6 @@ namespace BusApp.Services.Implementations
             // Generate JWT Token
             string token = GenerateJwtToken(createdUser);
 
-            // Convert User to UserDto before returning
             return new LoginResponseDto
             {
                 Name = createdUser.Name,
@@ -126,8 +124,6 @@ namespace BusApp.Services.Implementations
                 };
             }
 
-
-            // Return the AuthResponseDto
             return new LoginResponseDto
             {
                 Name = user.Name,
@@ -180,7 +176,6 @@ namespace BusApp.Services.Implementations
         // Helper: Generate JWT token
         private string GenerateJwtToken(User user)
         {
-            // Get the JWT secret key from app settings
             var secretKey = _configuration["Jwt:Secret"];
             if (string.IsNullOrEmpty(secretKey))
             {
@@ -198,7 +193,7 @@ namespace BusApp.Services.Implementations
 };
 
             var token = new JwtSecurityToken(
-                expires: DateTime.Now.AddDays(7), // Token expiration time
+                expires: DateTime.Now.AddDays(7),
                 signingCredentials: credentials,
                 claims: claims
             );

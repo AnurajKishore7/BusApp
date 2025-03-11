@@ -62,8 +62,7 @@ namespace BusApp.Services.Implementations
         public async Task<BusRouteResponseDto?> SearchBusRouteAsync(string? source, string? destination)
         {
             try
-            {
-                // Input validation
+            { 
                 source = source?.Trim().ToLower();
                 destination = destination?.Trim().ToLower();
 
@@ -105,7 +104,7 @@ namespace BusApp.Services.Implementations
                 {
                     Source = newBusRouteDto.Source,
                     Destination = newBusRouteDto.Destination,
-                    EstimatedDuration = duration, // Use parsed TimeSpan
+                    EstimatedDuration = duration, // Using parsed TimeSpan
                     Distance = newBusRouteDto.Distance,
                     IsDeleted = false
                 };
@@ -134,7 +133,6 @@ namespace BusApp.Services.Implementations
         {
             try
             {
-                // Validate ID
                 if (id <= 0)
                     throw new ArgumentException("Invalid bus route ID.");
 
@@ -149,13 +147,11 @@ namespace BusApp.Services.Implementations
                 if (!TimeSpan.TryParseExact(updatedBusRouteDto.EstimatedDuration, "hh\\:mm", null, out var duration))
                     throw new ArgumentException("Invalid EstimatedDuration format. Use HH:mm (e.g., 12:30).");
 
-                // Update properties
                 existingRoute.Source = updatedBusRouteDto.Source;
                 existingRoute.Destination = updatedBusRouteDto.Destination;
                 existingRoute.EstimatedDuration = duration; // Assign parsed TimeSpan
                 existingRoute.Distance = updatedBusRouteDto.Distance;
 
-                // Save changes
                 var result = await _repo.UpdateBusRouteAsync(existingRoute);
 
                 if (!result)

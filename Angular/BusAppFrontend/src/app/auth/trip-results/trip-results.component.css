@@ -1,24 +1,24 @@
 .bg-bus-white {
-    background-color: #f9fafb;
-  }
-  .bg-bus-grey {
-    background-color: #e5e7eb;
-  }
-  .bg-bus-red {
-    background-color: #dc2626;
-  }
-  .text-bus-red {
-    color: #dc2626;
-  }
-  .text-bus-white {
-    color: #ffffff;
-  }
-  .shadow-md {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  button:hover {
-    @apply bg-gray-300;
-  }
-  .bg-bus-red:hover {
-    @apply bg-red-700;
-  }
+  background-color: #f9fafb;
+}
+.bg-bus-grey {
+  background-color: #e5e7eb;
+}
+.bg-bus-red {
+  background-color: #dc2626;
+}
+.text-bus-red {
+  color: #dc2626;
+}
+.text-bus-white {
+  color: #ffffff;
+}
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+button:hover {
+  @apply bg-gray-300;
+}
+.bg-bus-red:hover {
+  @apply bg-red-700;
+}

@@ -2,14 +2,13 @@
 using BusApp.Models;
 using BusApp.Repositories.Interfaces;
 using BusApp.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusApp.Services.Implementations
 {
     public class BusesService : IBusesService
     {
         private readonly IBusesRepo _busesRepo;
-        private readonly IOperatorRepo _operatorRepo; // To fetch operator details
+        private readonly IOperatorRepo _operatorRepo;
 
         public BusesService(IBusesRepo busesRepo, IOperatorRepo operatorRepo)
         {
@@ -128,7 +127,7 @@ namespace BusApp.Services.Implementations
                     BusNo = newBusDto.BusNo,
                     BusType = newBusDto.BusType,
                     TotalSeats = newBusDto.TotalSeats,
-                    OperatorId = transportOperator.Id, // Assign operator ID
+                    OperatorId = transportOperator.Id, // Assign fetched operator ID
                     IsDeleted = false
                 };
 

@@ -1,8 +1,8 @@
-// Interface for raw API response
+// src/app/core/models/trip-results.dto.ts
 export interface RawTripResult {
   tripId: number;
-  departure: string; 
-  arrival: string;  
+  departure: string;
+  arrival: string;
   operatorName: string;
   busNo: string;
   pricePerSeat: number;
@@ -11,7 +11,25 @@ export interface RawTripResult {
   busType: string;
 }
 
-//TripResults interface
+export interface TripDetailsResponse {
+  id: number;
+  busRouteId: number;
+  busId: number;
+  departureTime: string;
+  arrivalTime: string;
+  price: number;
+  source: string;
+  destination: string;
+  journeyDate: string;
+  availableSeats: string[];
+}
+
+export interface TimeSpan {
+  hours: number;
+  minutes: number;
+  toString(): string;
+}
+
 export interface TripResults {
   tripId: number;
   operatorName: string;
@@ -24,35 +42,31 @@ export interface TripResults {
   busType: string;
   departureLocation?: string;
   arrivalLocation?: string;
+  availableSeats?: string[];
 }
 
-export interface TimeSpan {
-  hours: number;
-  minutes: number;
-  toString(): string;
-}
-
-// Utility function to parse RawTripResult into TripResults
-export function parseTripResult(raw: RawTripResult): TripResults {
+export function parseTripResult(raw: RawTripResult, source: string, destination: string): TripResults {
   const parseTime = (timeStr: string): TimeSpan => {
-      const [hours, minutes] = timeStr.split(':').map(Number);
-      return {
-          hours,
-          minutes,
-          toString: () => `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
-      };
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return {
+      hours,
+      minutes,
+      toString: () => `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
+    };
   };
 
   return {
-      tripId: raw.tripId,
-      operatorName: raw.operatorName,
-      busNo: raw.busNo,
-      departure: parseTime(raw.departure),
-      arrival: parseTime(raw.arrival),
-      startingFare: raw.pricePerSeat,
-      seatsAvailable: raw.seatsAvailable,
-      totalSeats: raw.totalSeats,
-      busType: raw.busType,
-      departureLocation: undefined, 
+    tripId: raw.tripId,
+    operatorName: raw.operatorName,
+    busNo: raw.busNo,
+    departure: parseTime(raw.departure),
+    arrival: parseTime(raw.arrival),
+    startingFare: raw.pricePerSeat,
+    seatsAvailable: raw.seatsAvailable,
+    totalSeats: raw.totalSeats,
+    busType: raw.busType,
+    departureLocation: source,
+    arrivalLocation: destination,
+    availableSeats: undefined
   };
 }

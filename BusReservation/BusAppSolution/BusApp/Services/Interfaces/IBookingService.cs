@@ -13,5 +13,6 @@ namespace BusApp.Services.Interfaces
         Task<int> GetAvailableSeatsAsync(int tripId, DateTime journeyDate);
         Task<IEnumerable<TripSearchDetailsDto>> SearchTripsAsync(string source, string destination, DateTime journeyDate);
         Task<TripSearchDetailsDto?> GetTripDetailsAsync(int tripId, DateTime journeyDate);
+        Task<SeatLayoutDto> GetSeatLayoutAsync(int tripId, DateTime journeyDate);
     }
 }

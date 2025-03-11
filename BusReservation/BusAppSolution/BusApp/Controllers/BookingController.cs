@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 using BusApp.DTOs;
 using BusApp.Models;
-using BusApp.Services.Implementations;
 using BusApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -75,23 +74,43 @@ namespace BusApp.Controllers
         // Add a new booking
         [HttpPost]
         [Authorize(Roles = "Client")]
-        public async Task<IActionResult> AddBooking([FromBody] BookingDto bookingDto)
+        public async Task<IActionResult> AddBooking([FromBody] BookingWithPassengerDetailsDto bookingDto)
         {
             try
             {
                 if (bookingDto == null)
                     return BadRequest("Invalid booking details.");
 
+                bookingDto.Contact = bookingDto.Contact.Trim();
+                Console.WriteLine($"Contact: {bookingDto.Contact}");
+
+                // Convert BookingWithPassengerDetailsDto to BookingDto for compatibility
+                var legacyBookingDto = new BookingDto
+                {
+                    TripId = bookingDto.TripId,
+                    JourneyDate = bookingDto.JourneyDate,
+                    TicketCount = bookingDto.TicketCount,
+                    Contact = bookingDto.Contact,
+                    TicketPassengers = bookingDto.TicketPassengers.Select(tp => new TicketPassengerDto
+                    {
+                        PassengerName = tp.PassengerName,
+                        Age = tp.Age,
+                        Gender = tp.Gender,
+                        SeatNumber = tp.SeatNumber,
+                        IsHandicapped = tp.IsHandicapped
+                    }).ToList()
+                };
+
                 // Get the authenticated user's email
                 var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
                 if (string.IsNullOrEmpty(userEmail))
                     return Unauthorized("User email not found.");
 
-                var newBooking = await _bookingService.AddBookingAsync(bookingDto, userEmail);
+                var newBooking = await _bookingService.AddBookingAsync(legacyBookingDto, userEmail);
                 if (newBooking == null)
                     return BadRequest("Failed to create booking.");
 
-                return CreatedAtAction(nameof(GetBookingById), new { bookingId = newBooking.Id }, (object)newBooking); // Explicit cast to object
+                return CreatedAtAction(nameof(GetBookingById), new { bookingId = newBooking.Id }, newBooking);
             }
             catch (Exception ex)
             {
@@ -193,6 +212,21 @@ namespace BusApp.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"An error occurred while fetching your bookings: {ex.Message}");
+            }
+        }
+
+        [HttpGet("seat-layout")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetSeatLayout([FromQuery] int tripId, [FromQuery] DateTime journeyDate)
+        {
+            try
+            {
+                var seatLayout = await _bookingService.GetSeatLayoutAsync(tripId, journeyDate);
+                return Ok(seatLayout);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while fetching the seat layout: {ex.Message}");
             }
         }
     }

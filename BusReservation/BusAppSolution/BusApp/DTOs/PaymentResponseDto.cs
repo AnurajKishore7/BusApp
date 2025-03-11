@@ -8,5 +8,4 @@
         public string PaymentMethod { get; set; }
         public string Status { get; set; } // Pending, Completed, Failed
     }
-
 }

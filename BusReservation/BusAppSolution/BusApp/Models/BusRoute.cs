@@ -18,7 +18,7 @@ namespace BusApp.Models
 
         [Required(ErrorMessage = "Estimated duration is required.")]
         [Column(TypeName = "time")]
-        public TimeSpan EstimatedDuration { get; set; }  // e.g., "16:30"
+        public TimeSpan EstimatedDuration { get; set; }  // e.g., "14:30" (total hours of journey)
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Distance must be a positive integer.")]

@@ -1,0 +1,119 @@
+<!-- payment.component.html -->
+<div class="min-h-screen bg-gray-100 p-4">
+  <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+    <!-- Header -->
+    <div class="bg-red-600 text-white p-2 rounded-t-lg flex justify-between items-center">
+      <div class="flex space-x-2">
+        <span>Chennai</span>
+        <span class="text-yellow-300">→</span>
+        <span>Bangalore</span>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col md:flex-row gap-6 mt-4" *ngIf="!paymentSuccess">
+      <!-- Payment Section -->
+      <div class="w-full md:w-2/3 bg-white p-4 rounded-lg shadow">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Choose Payment Method</h2>
+
+        <div class="mb-6">
+          <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Select Payment Method</label>
+          <select
+            id="paymentMethod"
+            [(ngModel)]="paymentMethod"
+            class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+          </select>
+
+          <button
+            (click)="confirmPayment()"
+            [disabled]="isProcessing || isLoading || !paymentId"
+            class="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            <span *ngIf="isProcessing">Processing...</span>
+            <span *ngIf="isLoading && !isProcessing">Loading...</span>
+            <span *ngIf="!isProcessing && !isLoading">Make Payment</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Booking Details -->
+      <div class="w-full md:w-1/3 bg-gray-50 p-4 rounded-lg shadow">
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Booking Details</h3>
+        <div class="space-y-2 text-sm text-gray-600">
+          <p>Booking ID: #{{bookingId}}</p>
+          <p>Total Amount: ₹{{formatAmount(totalAmount)}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success and Ticket Section -->
+    <div *ngIf="paymentSuccess" class="mt-6 p-4 bg-green-100 rounded-lg">
+      <h3 class="text-lg font-semibold text-green-800">Payment Successful!</h3>
+      <p class="text-sm text-gray-600">Your booking is now confirmed.</p>
+
+      <!-- Ticket Details -->
+      <div class="mt-4 p-4 bg-white rounded-lg shadow">
+        <h4 class="text-md font-medium text-gray-700">Ticket Details</h4>
+        <div class="space-y-2 text-sm text-gray-600 mt-2">
+          <p><strong>Journey Details:</strong></p>
+          <p>Booking ID: {{bookingDetails?.id}}</p>
+          <p>Source: {{bookingDetails?.source}}</p>
+          <p>Destination: {{bookingDetails?.destination}}</p>
+          <p>Journey Date: {{bookingDetails?.journeyDate | date:'yyyy-MM-dd'}}</p>
+
+          <p><strong>Passenger Details:</strong></p>
+          <ul>
+            <li *ngFor="let passenger of bookingDetails?.ticketPassengers">
+              (Name: {{passenger.passengerName || 'N/A'}}, Age: {{passenger.age || 'N/A'}}, Gender: {{passenger.gender || 'N/A'}}, Seat: {{passenger.seatNumber || 'N/A'}}, Handicapped: {{passenger.isHandicapped ? 'Yes' : 'No'}})
+            </li>
+          </ul>
+
+          <p><strong>Payment Details:</strong></p>
+          <ng-container *ngIf="bookingDetails?.totalAmount as totalAmount">
+            <p>Base Fare: ₹{{formatAmount((totalAmount - 10) / 1.06)}}</p>
+            <p>GST: ₹{{formatAmount(((totalAmount - 10) / 1.06) * 0.06)}}</p>
+            <p>Convenience Fee: ₹{{formatAmount(10)}}</p>
+            <p>Total Amount: ₹{{formatAmount(totalAmount)}}</p>
+          </ng-container>
+          <p>Payment Method: {{bookingDetails?.paymentMethod || 'Online'}}</p>
+          <p>Payment Status: {{bookingDetails?.paymentStatus || 'Completed'}}</p>
+        </div>
+
+        <!-- Download and Print Buttons -->
+        <div class="mt-4 flex space-x-2">
+          <button
+            (click)="downloadTicket()"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Download Ticket
+          </button>
+          <button
+            (click)="printTicket()"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            Print Ticket
+          </button>
+        </div>
+      </div>
+
+      <button
+        (click)="returnToLandingPage()"
+        class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+      >
+        Return to Landing Page
+      </button>
+    </div>
+
+    <!-- Cancel Button -->
+    <div class="mt-4 text-center" *ngIf="!paymentSuccess">
+      <button
+        (click)="cancelPayment()"
+        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+      >
+        Cancel Payment
+      </button>
+    </div>
+  </div>
+</div>

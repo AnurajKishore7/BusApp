@@ -70,7 +70,7 @@ namespace BusApp.Context
                 .ValueGeneratedOnAdd();
             modelBuilder.Entity<BusSeat>()
                 .HasOne(bs => bs.Bus)
-                .WithMany() // No navigation property in Bus for BusSeats yet
+                .WithMany()
                 .HasForeignKey(bs => bs.BusId)
                 .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<BusSeat>()
@@ -83,7 +83,7 @@ namespace BusApp.Context
                 .ValueGeneratedOnAdd();
             modelBuilder.Entity<BusRoute>()
                 .Property(br => br.EstimatedDuration)
-                .HasColumnType("time"); // Updated to TimeSpan
+                .HasColumnType("time");
             modelBuilder.Entity<Trip>()
                 .HasOne(t => t.BusRoute)
                 .WithMany(r => r.Trips)

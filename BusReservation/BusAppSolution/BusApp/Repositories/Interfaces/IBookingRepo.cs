@@ -13,6 +13,7 @@ namespace BusApp.Repositories.Interfaces
         Task<Booking> AddBookingAsync(Booking booking);
         Task<bool> CancelBookingAsync(int bookingId);
         Task<int> GetBookedSeatsByTripIdAsync(int tripId, DateTime journeyDate);
+        Task<List<string>> GetBookedSeatNumbersAsync(int tripId, DateTime journeyDate);
 
     }
 

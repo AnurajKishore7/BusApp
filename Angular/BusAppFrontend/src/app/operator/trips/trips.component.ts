@@ -153,7 +153,7 @@ export class TripsComponent implements OnInit {
       busRouteId: trip.busRouteId,
       busId: trip.busId,
       departureTime: trip.departureTime.slice(0, 5), // "HH:mm:ss" to "HH:mm"
-      arrivalTime: trip.arrivalTime.slice(0, 5),     // "HH:mm:ss" to "HH:mm"
+      arrivalTime: trip.arrivalTime.slice(0, 5),
       price: trip.price
     };
     this.showEditModal = true;

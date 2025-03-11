@@ -14,13 +14,15 @@ import { TripsComponent as OperatorTripsComponent } from './operator/trips/trips
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
 import { TripResultsComponent } from './auth/trip-results/trip-results.component';
+import { BookingComponent } from './booking/booking.component';
+import { PaymentComponent } from './payment/payment.component';
+import { PaymentGuard } from './core/guards/payment.guard';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'signup-client', component: SignupClientComponent },
   { path: 'signup-operator', component: SignupOperatorComponent },
-  { path: 'trip-results', component: TripResultsComponent },
-  { path: 'trip-details/:id', component: TripResultsComponent },
+  { path: 'trip-results', component: TripResultsComponent }, 
   { 
     path: 'trip-search', 
     component: LandingComponent,
@@ -42,7 +44,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'transport-operators', pathMatch: 'full' },
       { path: 'transport-operators', component: TransportOperatorsComponent },
       { path: 'buses', component: AdminBusesComponent },
-      { path: 'bus-routes', component:  AdminBusRoutesComponent  },
+      { path: 'bus-routes', component: AdminBusRoutesComponent },
       { path: 'trips', component: AdminTripsComponent }
     ]
   },
@@ -59,7 +61,16 @@ export const routes: Routes = [
     ]
   },
   { 
-    path: 'trip-results', 
-    component: TripResultsComponent 
-  }
+    path: 'booking', 
+    component: BookingComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'Client' }
+  },
+  {
+    path: 'payment',
+    component: PaymentComponent,
+    canActivate: [AuthGuard, RoleGuard, PaymentGuard],
+    data: { role: 'Client'}
+  },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

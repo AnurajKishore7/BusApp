@@ -4,7 +4,7 @@ import { AuthService } from '../../auth/auth.service';
 import { inject } from '@angular/core';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  const authService = inject(AuthService); // Inject service
+  const authService = inject(AuthService);
   const token = authService.getToken();
   if (token) {
     const authRequest = req.clone({

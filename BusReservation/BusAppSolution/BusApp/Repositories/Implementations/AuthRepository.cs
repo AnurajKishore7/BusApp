@@ -30,11 +30,11 @@ namespace BusApp.Repositories.Implementations
             if (await UserExists(user.Email))
                 throw new InvalidOperationException("Email is already registered.");
 
-            await _context.Users.AddAsync(user); // Save User
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
             await _context.Clients.AddAsync(client);
-            await _context.SaveChangesAsync(); // Save Client
+            await _context.SaveChangesAsync();
 
             return user;
         }

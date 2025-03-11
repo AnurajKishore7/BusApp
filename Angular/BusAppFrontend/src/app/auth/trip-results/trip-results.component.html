@@ -1,10 +1,10 @@
 <div class="min-h-screen bg-bus-white flex flex-col">
   <!-- Header -->
   <div class="bg-gray-100 p-4">
-    <div class="text-sm text-gray-500">Bus Ticket > {{ source }} To {{ destination }} Bus</div>
-    <div class="text-2xl font-bold text-gray-900">{{ source }} to {{ destination }} Bus</div>
+    <div class="text-sm text-gray-500">Bus Ticket > {{ source | capitalize }} To {{ destination | capitalize }} Bus</div>
+    <div class="text-2xl font-bold text-gray-900">{{ source | capitalize }} to {{ destination | capitalize }} Bus</div>
     <div class="flex items-center space-x-2 text-gray-700">
-      <span>{{ source }} → {{ destination }}</span>
+      <span>{{ source | capitalize }} → {{ destination | capitalize }}</span>
       <span>|</span>
       <span>{{ journeyDate | date: 'dd MMM' }}</span>
       <span>|</span>
@@ -93,34 +93,82 @@
               </div>
               <div class="text-sm text-gray-600">{{ trip.busType }}</div>
               <div class="flex space-x-2 text-sm text-gray-600 mt-1">
-                <span>{{ trip.departure.toString() }} {{ trip.departureLocation }}</span>
+                <span>{{ trip.departure.toString() }} {{ (trip.departureLocation ?? '') | capitalize }}</span>
                 <span>→</span>
                 <span>{{ calculateDuration(trip.departure, trip.arrival) }}</span>
                 <span>→</span>
-                <span>{{ trip.arrival.toString() }} {{ trip.arrivalLocation }}</span>
+                <span>{{ trip.arrival.toString() }} {{ (trip.arrivalLocation ?? '') | capitalize }}</span>
               </div>
             </div>
             <div class="text-right">
               <div class="text-lg font-bold text-gray-900">₹{{ trip.startingFare }}</div>
               <div class="text-sm text-gray-600">{{ trip.seatsAvailable }}/{{ trip.totalSeats }} Seats available</div>
-              <div class="text-sm text-green-600">★ 4.5</div> <!-- Hardcoded rating -->
+              <div class="text-sm text-green-600">★ 4.5</div>
             </div>
           </div>
           <div class="flex justify-between items-center mt-2">
             <div class="text-sm text-gray-600">
-              <!-- Hardcoded amenities -->
               Live Tracking
             </div>
             <button
               (click)="viewSeats(trip.tripId)"
               class="bg-bus-red text-bus-white px-4 py-2 rounded-lg hover:bg-red-700"
+              [disabled]="loadingSeats"
             >
-              View Seats
+              {{ loadingSeats && selectedTripId === trip.tripId ? 'Loading...' : (selectedTripId === trip.tripId ? 'Hide Seats' : 'View Seats') }}
             </button>
           </div>
           <div class="text-sm text-gray-600 mt-1">
-            <!-- Hardcoded reward -->
             Take 4 trips get a free ticket
+          </div>
+
+          <!-- Seat Selection Dropdown -->
+          <div *ngIf="selectedTripId === trip.tripId" class="mt-4 p-4 border-t border-gray-200">
+            <!-- Seat Loading/Error State -->
+            <div *ngIf="loadingSeats" class="text-center text-gray-700">Loading seat details...</div>
+            <div *ngIf="error && !loadingSeats" class="text-center text-red-500">{{ error }}</div>
+
+            <!-- Seat Legend -->
+            <div *ngIf="!loadingSeats && !error" class="flex justify-end space-x-4 mb-4 text-sm">
+              <div class="flex items-center">
+                <span class="w-5 h-5 bg-green-100 border mr-2"></span>
+                <span>Available</span>
+              </div>
+              <div class="flex items-center">
+                <span class="w-5 h-5 bg-red-500 border mr-2"></span>
+                <span>Booked</span>
+              </div>
+              <div class="flex items-center">
+                <span class="w-5 h-5 bg-gray-500 border mr-2"></span>
+                <span>Selected</span>
+              </div>
+            </div>
+
+            <!-- Seat Grid (4 rows x 10 columns) -->
+            <div *ngIf="!loadingSeats && !error" class="grid grid-cols-10 gap-2">
+              <div
+                *ngFor="let seat of seats"
+                class="flex items-center justify-center w-10 h-10 border rounded text-sm cursor-pointer transition-colors duration-200"
+                [ngClass]="{
+                  'bg-green-100 hover:bg-green-200': seat.available && !seat.selected,
+                  'bg-gray-500 text-white': seat.selected,
+                  'bg-red-500 text-white cursor-not-allowed': !seat.available && !seat.selected
+                }"
+                (click)="toggleSeatSelection(seat)"
+              >
+                {{ seat.number }}
+              </div>
+            </div>
+
+            <!-- Proceed to Booking Button -->
+            <div *ngIf="!loadingSeats && !error" class="mt-4 text-right">
+              <button
+                (click)="proceedToBooking(trip.tripId)"
+                class="bg-bus-red text-bus-white px-4 py-2 rounded-lg hover:bg-red-700"
+              >
+                Proceed to Booking
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,12 +1,5 @@
-1️⃣ Models (Entities) – Define database tables.
-2️⃣ DbContext (Database Connection & ORM Mapping) – Set up database interaction.
-3️⃣ Interfaces (Repository Contracts) – Define CRUD methods.
-4️⃣ Repositories (Database Interactions) – Implement repository methods using DbContext.
-5️⃣ DTOs (Data Transfer Objects) – Define request/response models.
-6️⃣ Services (Business Logic Layer) – Implement business logic and use repositories.
-7️⃣ Exceptions (Error Handling) – Implement global exception handling.
-8️⃣ Controllers (API Endpoints) – Expose API methods and call services.
-
+=====================================
+		Models
 =====================================
 1. Users
 Email [PK]
@@ -92,7 +85,11 @@ Id [pk]
 BusId [Fk, references Buses]
 SeatNumber (e.g., "A1", "B2")
 IsDeleted
-======================================
+=========================================================
+
+=====================================
+	Entity Relationships
+=====================================
 
 1. Users → TransportOperators
 --Relationship: One-to-One (1:1)
@@ -151,7 +148,3 @@ Indirect Relationships:
 11. Buses -> BusSeats
 --Relationship: One-to-Many (1:n)
 A single bus may include multiple seats 
-
-
-
-==============================================

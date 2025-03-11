@@ -16,6 +16,24 @@ namespace BusApp.Controllers
             _tripsService = tripsService;
         }
 
+        [HttpGet("{id}/details")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTripDetails(int id, [FromQuery] DateTime journeyDate)
+        {
+            try
+            {
+                var trip = await _tripsService.GetTripDetailsAsync(id, journeyDate);
+                if (trip == null)
+                    return NotFound($"Trip with ID {id} not found for journey date {journeyDate:yyyy-MM-dd}");
+
+                return Ok(trip);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllTrips()
         {

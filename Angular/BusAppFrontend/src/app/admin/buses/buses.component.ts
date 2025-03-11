@@ -16,7 +16,7 @@ export class BusesComponent implements OnInit {
   buses: Bus[] = [];
   filteredBuses: Bus[] = [];
   searchBusNo: string = '';
-  searchType: string = ''; // Will bind to dropdown
+  searchType: string = '';
   searchOperatorId: string = '';
   currentPage: number = 1;
   pageSize: number = 10;
@@ -54,7 +54,7 @@ export class BusesComponent implements OnInit {
     if (this.searchBusNo) {
       filtered = filtered.filter(bus => bus.busNo.toLowerCase().includes(this.searchBusNo.toLowerCase()));
     }
-    if (this.searchType) { // Filter only if a specific type is selected
+    if (this.searchType) { 
       filtered = filtered.filter(bus => bus.busType.toLowerCase() === this.searchType.toLowerCase());
     }
     if (this.searchOperatorId) {

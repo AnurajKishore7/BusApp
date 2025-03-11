@@ -1,16 +1,15 @@
 select * from users
 select * from clients
-select * from TransportOperators where id = 1
+select * from TransportOperators
 
-select * from busroutes where id = 1
+select * from busroutes
 
-select * from buses where TotalSeats = 40
+select * from buses
 
-select Distinct BusType from buses where OperatorId = 11
+select * from trips
 
-select * from trips where BusRouteId = 1
+select * from bookings
 
-update trips
-set price = 950
-where id = 3
+select * from payments 
+
 
